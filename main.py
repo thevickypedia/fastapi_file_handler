@@ -2,6 +2,7 @@ from datetime import datetime
 from os import environ, path, stat, getcwd
 from pathlib import PurePath
 from socket import gethostbyname
+from typing import Optional
 
 import uvicorn
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends
@@ -30,13 +31,23 @@ app.add_middleware(
 )
 
 
-class FileHandler(BaseModel):
-    """BaseModel that handles input data for the API which is treated as members for the class FileHandler.
+class DownloadHandler(BaseModel):
+    """BaseModel that handles input data for the API which is treated as members for the class DownloadHandler.
 
-    >>> FileHandler
+    >>> DownloadHandler
 
     """
     FileName: str
+    FilePath: str = getcwd()
+
+
+class UploadHandler(BaseModel):
+    """BaseModel that handles input data for the API which is treated as members for the class UploadHandler.
+
+    >>> UploadHandler
+
+    """
+    FileName: Optional[str]
     FilePath: str = getcwd()
 
 
@@ -63,11 +74,11 @@ def status() -> dict:
 
 
 @app.get("/download_file")
-async def download_file(argument: FileHandler = Depends()) -> FileResponse:
+async def download_file(argument: DownloadHandler = Depends()) -> FileResponse:
     """# Asynchronously streams a file as the response.
 
     ## Args:
-    argument: Takes the class `FileHandler` as an argument.
+    `argument:` Takes the class **DownloadHandler** as an argument.
 
     ## Returns:
     `FileResponse:`
@@ -76,26 +87,38 @@ async def download_file(argument: FileHandler = Depends()) -> FileResponse:
     file_name = argument.FileName
     file_path = f'{argument.FilePath}{path.sep}{file_name}'
     if path.isfile(path=file_path):
-        return FileResponse(path=file_path, media_type='application/octet-stream', filename=file_name)
+        if file_name.startswith('.'):
+            raise HTTPException(status_code=403, detail='Dot (.) files cannot be downloaded over API.')
+        else:
+            return FileResponse(path=file_path, media_type='application/octet-stream', filename=file_name)
     else:
         raise HTTPException(status_code=404, detail='File not present.')
 
 
 @app.post("/upload_file")
-async def upload_file(data: UploadFile = File(...)):
+async def upload_file(upload: UploadHandler = Depends(), data: UploadFile = File(...)):
     """# Allows the user to send a ``POST`` request to upload a file to the server.
 
     ## Args:
-        data: Takes the file that has to be uploaded as an argument.
+    - `upload:` Takes the class `UploadHandler` as an argument.
+    - `data:` Takes the file that has to be uploaded as an argument.
 
     ## Raises:
         - 200: If file was uploaded successfully.
         - 500: If the file was not stored.
     """
-    filename = data.filename
+    if not (filename := upload.FileName):
+        filename = data.filename
+    if (filepath := upload.FilePath) and (filepath.endswith(filename)):
+        filename = filepath
+    else:
+        if filepath.endswith(path.sep):
+            filename = f'{filepath}{filename}'
+        else:
+            filename = f'{filepath}{path.sep}{filename}'
     content = await data.read()
-    with open(filename, 'w') as file:
-        file.write(content.decode(encoding='UTF-8'))
+    with open(filename, 'wb') as file:
+        file.write(content)
 
     if path.isfile(filename):
         if not int(datetime.now().timestamp()) - int(stat(filename).st_mtime):
