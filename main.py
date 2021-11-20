@@ -1,5 +1,6 @@
 from datetime import datetime
 from os import environ, path, stat, getcwd
+from pathlib import PurePath
 from socket import gethostbyname
 
 import uvicorn
@@ -106,4 +107,10 @@ async def upload_file(data: UploadFile = File(...)):
 
 
 if __name__ == '__main__':
-    uvicorn.run(app="main:app", host=gethostbyname('localhost'), port=int(environ.get('port', 1914)), reload=True)
+    argument_dict = {
+        "app": f"{PurePath(__file__).stem}:app",
+        "host": gethostbyname('localhost'),
+        "port": int(environ.get('port', 1914)),
+        "reload": True
+    }
+    uvicorn.run(**argument_dict)
