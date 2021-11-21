@@ -48,6 +48,13 @@ Models - Classes
    :members:
    :undoc-members:
 
+Models - Executor
+=================
+
+.. automodule:: models.executor
+   :members:
+   :undoc-members:
+
 Models - Custom Logging
 =======================
 

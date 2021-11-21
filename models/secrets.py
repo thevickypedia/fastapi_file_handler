@@ -1,8 +1,6 @@
-from base64 import urlsafe_b64encode
 from getpass import getpass
 from os import environ, getlogin, getuid, path
 from pwd import getpwuid
-from uuid import uuid1
 
 from tortoise.models import Model
 

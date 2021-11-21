@@ -64,7 +64,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>feed</strong> – Takes the class <strong>GetPhrase</strong> as an argument.</p></li>
+<li><p><strong>feed</strong> – Authenticates the user request.</p></li>
 <li><p><strong>argument</strong> – Takes the class <strong>DownloadHandler</strong> as an argument.</p></li>
 </ul>
 </dd>
@@ -98,7 +98,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>feed</strong> – Authentication apikey.</p></li>
+<li><p><strong>feed</strong> – Authenticates the user request.</p></li>
 <li><p><strong>argument</strong> – Takes the file path as an argument.</p></li>
 </ul>
 </dd>
@@ -133,12 +133,12 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="auth_apikey.upload_file">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth_apikey.</span></span><span class="sig-name descname"><span class="pre">upload_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.GetPhrase" title="models.classes.GetPhrase"><span class="pre">models.classes.GetPhrase</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(NoneType)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.UploadHandler" title="models.classes.UploadHandler"><span class="pre">models.classes.UploadHandler</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(NoneType)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">fastapi.datastructures.UploadFile</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">File(Ellipsis)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth_apikey.upload_file" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth_apikey.</span></span><span class="sig-name descname"><span class="pre">upload_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.GetPhrase" title="models.classes.GetPhrase"><span class="pre">models.classes.GetPhrase</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(NoneType)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.UploadHandler" title="models.classes.UploadHandler"><span class="pre">models.classes.UploadHandler</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(NoneType)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">fastapi.datastructures.UploadFile</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">File(Ellipsis)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#auth_apikey.upload_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows the user to send a <code class="docutils literal notranslate"><span class="pre">POST</span></code> request to upload a file to the server.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>feed</strong> – Authenticates the user.</p></li>
+<li><p><strong>feed</strong> – Authenticates the user request.</p></li>
 <li><p><strong>upload</strong> – Takes the class <code class="docutils literal notranslate"><span class="pre">UploadHandler</span></code> as an argument.</p></li>
 <li><p><strong>data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
 </ul>
@@ -193,7 +193,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>authenticator</strong> – Authenticates the user.</p></li>
+<li><p><strong>authenticator</strong> – Authenticates the user request.</p></li>
 <li><p><strong>argument</strong> – Takes the class <strong>DownloadHandler</strong> as an argument.</p></li>
 </ul>
 </dd>
@@ -227,7 +227,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>authenticator</strong> – Authenticates the user.</p></li>
+<li><p><strong>authenticator</strong> – Authenticates the user request.</p></li>
 <li><p><strong>argument</strong> – Takes the file path as an argument.</p></li>
 </ul>
 </dd>
@@ -267,8 +267,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>- upload</strong> – Takes the class <cite>UploadHandler</cite> as an argument.</p></li>
-<li><p><strong>- data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
+<li><p><strong>authenticator</strong> – Authenticates the user request.</p></li>
+<li><p><strong>upload</strong> – Takes the class <cite>UploadHandler</cite> as an argument.</p></li>
+<li><p><strong>data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -447,6 +448,66 @@ name is specified, allow every event.</p>
 </dd></dl>
 
 </section>
+<section id="module-models.executor">
+<span id="models-executor"></span><h1>Models - Executor<a class="headerlink" href="#module-models.executor" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="models.executor.Executor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.executor.</span></span><span class="sig-name descname"><span class="pre">Executor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.executor.Executor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class to run all the executions when called.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Executor</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="models.executor.Executor.execute_download_file">
+<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute_download_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.DownloadHandler" title="models.classes.DownloadHandler"><span class="pre">models.classes.DownloadHandler</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.FileResponse</span></span></span><a class="headerlink" href="#models.executor.Executor.execute_download_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes task for the endpoint <code class="docutils literal notranslate"><span class="pre">/download-file</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argument</strong> – Takes the class <code class="docutils literal notranslate"><span class="pre">DownloadHandler</span></code> as an argument.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns the download-able version of the file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>FileResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.executor.Executor.execute_list_directory">
+<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute_list_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.ListHandler" title="models.classes.ListHandler"><span class="pre">models.classes.ListHandler</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#models.executor.Executor.execute_list_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes task for the endpoint <code class="docutils literal notranslate"><span class="pre">/list-directory</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argument</strong> – Takes the class <code class="docutils literal notranslate"><span class="pre">ListHandler</span></code> as an argument.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns a dictionary of files and directories in the given path.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.executor.Executor.execute_upload_file">
+<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute_upload_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.UploadHandler" title="models.classes.UploadHandler"><span class="pre">models.classes.UploadHandler</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">fastapi.datastructures.UploadFile</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#models.executor.Executor.execute_upload_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes task for the endpoint <code class="docutils literal notranslate"><span class="pre">/upload-file</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>argument</strong> – Takes the class <code class="docutils literal notranslate"><span class="pre">UploadHandler</span></code> as an argument.</p></li>
+<li><p><strong>data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-models.config">
 <span id="models-custom-logging"></span><h1>Models - Custom Logging<a class="headerlink" href="#module-models.config" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
@@ -492,6 +553,7 @@ name is specified, allow every event.</p>
 <li><a class="reference internal" href="#module-models.secrets">Models - Secrets</a></li>
 <li><a class="reference internal" href="#module-models.filters">Models - Filters</a></li>
 <li><a class="reference internal" href="#module-models.classes">Models - Classes</a></li>
+<li><a class="reference internal" href="#module-models.executor">Models - Executor</a></li>
 <li><a class="reference internal" href="#module-models.config">Models - Custom Logging</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
