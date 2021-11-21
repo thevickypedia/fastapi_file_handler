@@ -1,9 +1,10 @@
 from os import getcwd
 from typing import Optional
+
+from passlib.hash import bcrypt
+from pydantic import BaseModel
 from tortoise import fields
 from tortoise.models import Model
-
-from pydantic import BaseModel
 
 
 class DownloadHandler(BaseModel):
@@ -46,3 +47,17 @@ class Bogus(Model):
     """
 
     authentication: str = fields.CharField(50)
+
+
+class Login(Model):
+    """Creates a datastructure with keys, id, username and password_hash
+
+    >>> Login
+
+    """
+    id = fields.IntField(pk=True)
+    username = fields.CharField(50, unique=True)
+    password_hash = fields.CharField(128)
+
+    def verify_password(self, password):
+        return bcrypt.verify(password, self.password_hash)
