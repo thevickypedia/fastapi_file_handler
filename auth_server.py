@@ -1,8 +1,7 @@
 from datetime import datetime
 from logging import getLogger
 from logging.config import dictConfig
-from os import environ, path, stat, getlogin, getuid
-from pwd import getpwuid
+from os import environ, path, stat
 from pathlib import PurePath
 from socket import gethostbyname
 
@@ -11,28 +10,18 @@ from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from getpass import getpass
+
 from models.classes import UploadHandler, DownloadHandler, Bogus
+from models.secrets import Secrets
 
 __module__ = PurePath(__file__).stem
 LOGGER = getLogger(__module__)
 environ['module'] = __module__
 
-USERNAME = environ.get('USER', path.expanduser('~') or getpwuid(getuid())[0] or getlogin())
-PASSWORD = environ.get('PASSWORD')
-
-if not USERNAME:
-    USERNAME: str = input(__prompt='Enter username: ')
-    environ['USER'] = USERNAME  # Store as env var so, value remains despite restart
-
-if not PASSWORD:
-    PASSWORD: str = getpass(prompt='Enter PASSWORD: ')
-    environ['PASSWORD'] = PASSWORD  # Store as env var so, value remains despite restart
-
 app = FastAPI(
     title="FileHandler API",
-    description="API to upload and download files to and from a server.",
-    version="v1.0"
+    description="API to upload and download files to and from a server using the server's login credentials.",
+    version="v2.0"
 )
 
 origins = [
@@ -60,7 +49,7 @@ async def startup_event():
 
 @app.post("/authenticator", include_in_schema=False)
 async def authenticator(form_data: OAuth2PasswordRequestForm = Depends()):
-    if form_data.username == USERNAME and form_data.password == PASSWORD:
+    if form_data.username == Secrets.USERNAME and form_data.password == Secrets.PASSWORD:
         LOGGER.info('Authentication Successful')
         return {"access_token": form_data.username + form_data.password}
     else:

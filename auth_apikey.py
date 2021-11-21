@@ -22,7 +22,7 @@ APIKEY = environ.get('APIKEY', urlsafe_b64encode(uuid1().bytes).rstrip(b'=').dec
 
 app = FastAPI(
     title="FileHandler API",
-    description="API to upload and download files to and from a server.",
+    description="API to upload and download files to and from a server using a randomly generated uuid as apikey.",
     version="v1.0"
 )
 
