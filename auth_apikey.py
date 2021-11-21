@@ -8,11 +8,11 @@ from socket import gethostbyname
 from uuid import uuid1
 
 import uvicorn
-from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, status
+from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 
-from models.classes import UploadHandler, DownloadHandler, GetPhrase
+from models.classes import DownloadHandler, GetPhrase, UploadHandler
 
 __module__ = PurePath(__file__).stem
 LOGGER = getLogger(__module__)
@@ -58,6 +58,7 @@ def verify_auth(apikey: str) -> None:
 
 @app.on_event(event_type='startup')
 async def startup_event():
+    """Runs during startup. Configures custom logging using LogConfig."""
     from models.config import LogConfig
     dictConfig(config=LogConfig().dict())
     LOGGER.info(f'Authentication Bearer: {APIKEY}')
@@ -76,7 +77,7 @@ async def redirect_index() -> str:
 
 @app.get('/status', include_in_schema=False)
 def health() -> dict:
-    """Health Check for FileFeeder.
+    """Health Check for the server.
 
     Returns:
         dict:
@@ -86,15 +87,15 @@ def health() -> dict:
 
 
 @app.get("/download_file")
-async def download_file(feed: GetPhrase = Depends(), argument: DownloadHandler = Depends()):
-    """# Asynchronously streams a file as the response.
+async def download_file(feed: GetPhrase = Depends(), argument: DownloadHandler = Depends()) -> FileResponse:
+    """Asynchronously streams a file as the response.
 
-    ## Args:
-    `argument:` Takes the class **DownloadHandler** as an argument.
+    Args:
+        argument: Takes the class **DownloadHandler** as an argument.
 
-    ## Returns:
-    `FileResponse:`
-    Returns the download-able version of the file.
+    Returns:
+        FileResponse:
+        Returns the download-able version of the file.
     """
     verify_auth(apikey=feed.apikey)
     file_name = argument.FileName
@@ -113,13 +114,13 @@ async def download_file(feed: GetPhrase = Depends(), argument: DownloadHandler =
 
 @app.post("/upload_file")
 async def upload_file(feed: GetPhrase = Depends(), upload: UploadHandler = Depends(), data: UploadFile = File(...)):
-    """# Allows the user to send a ``POST`` request to upload a file to the server.
+    """Allows the user to send a ``POST`` request to upload a file to the server.
 
-    ## Args:
-    - `upload:` Takes the class `UploadHandler` as an argument.
-    - `data:` Takes the file that has to be uploaded as an argument.
+    Args:
+        - upload: Takes the class ``UploadHandler`` as an argument.
+        - data: Takes the file that has to be uploaded as an argument.
 
-    ## Raises:
+    Raises:
         - 200: If file was uploaded successfully.
         - 500: If the file was not stored.
     """

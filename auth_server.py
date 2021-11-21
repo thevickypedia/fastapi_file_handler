@@ -6,12 +6,12 @@ from pathlib import PurePath
 from socket import gethostbyname
 
 import uvicorn
-from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, status
+from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from models.classes import UploadHandler, DownloadHandler, Bogus
+from models.classes import Bogus, DownloadHandler, UploadHandler
 from models.secrets import Secrets
 
 __module__ = PurePath(__file__).stem
@@ -43,12 +43,22 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="authenticator")
 
 @app.on_event(event_type='startup')
 async def startup_event():
+    """Runs during startup. Configures custom logging using LogConfig."""
     from models.config import LogConfig
     dictConfig(config=LogConfig().dict())
 
 
 @app.post("/authenticator", include_in_schema=False)
-async def authenticator(form_data: OAuth2PasswordRequestForm = Depends()):
+async def authenticator(form_data: OAuth2PasswordRequestForm = Depends()) -> dict:
+    """Authenticates the user entered information.
+
+    Args:
+        form_data: Takes the user input as an argument.
+
+    Returns:
+        dict:
+        A dictionary of access token.
+    """
     if form_data.username == Secrets.USERNAME and form_data.password == Secrets.PASSWORD:
         LOGGER.info('Authentication Successful')
         return {"access_token": form_data.username + form_data.password}
@@ -72,7 +82,7 @@ async def redirect_index() -> str:
 
 @app.get('/status', include_in_schema=False)
 def health() -> dict:
-    """Health Check for FileFeeder.
+    """Health Check for the server.
 
     Returns:
         dict:
@@ -83,15 +93,16 @@ def health() -> dict:
 
 # noinspection PyShadowingNames
 @app.get("/download_file")
-async def download_file(argument: DownloadHandler = Depends(), authenticator: dict = Depends(oauth2_scheme)):
-    """# Asynchronously streams a file as the response.
+async def download_file(argument: DownloadHandler = Depends(),
+                        authenticator: dict = Depends(oauth2_scheme)) -> FileResponse:
+    """Asynchronously streams a file as the response.
 
-    ## Args:
-    `argument:` Takes the class **DownloadHandler** as an argument.
+    Args:
+        argument: Takes the class **DownloadHandler** as an argument.
 
-    ## Returns:
-    `FileResponse:`
-    Returns the download-able version of the file.
+    Returns:
+        FileResponse:
+        Returns the download-able version of the file.
     """
     await Bogus(authentication=authenticator)
     file_name = argument.FileName
@@ -111,14 +122,14 @@ async def download_file(argument: DownloadHandler = Depends(), authenticator: di
 # noinspection PyShadowingNames
 @app.post("/upload_file")
 async def upload_file(upload: UploadHandler = Depends(), data: UploadFile = File(...),
-                      authenticator: dict = Depends(oauth2_scheme)):
-    """# Allows the user to send a ``POST`` request to upload a file to the server.
+                      authenticator: dict = Depends(oauth2_scheme)) -> None:
+    """Allows the user to send a ``POST`` request to upload a file to the server.
 
-    ## Args:
-    - `upload:` Takes the class `UploadHandler` as an argument.
-    - `data:` Takes the file that has to be uploaded as an argument.
+    Args:
+        - upload: Takes the class `UploadHandler` as an argument.
+        - data: Takes the file that has to be uploaded as an argument.
 
-    ## Raises:
+    Raises:
         - 200: If file was uploaded successfully.
         - 500: If the file was not stored.
     """
