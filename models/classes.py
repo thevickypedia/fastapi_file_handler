@@ -36,6 +36,18 @@ class UploadHandler(BaseModel):
         FilePath: str = getcwd()
 
 
+class ListHandler(BaseModel):
+    """BaseModel that handles input data for the API which is treated as members for the class ``ListHandler``.
+
+    >>> ListHandler
+
+    See Also:
+        - `FilePath`: Defaults to server's directory.
+    """
+
+    FilePath: str
+
+
 class GetPhrase(BaseModel):
     """BaseModel that handles input data for the API which is treated as members for the class ``GetPhrase``.
 

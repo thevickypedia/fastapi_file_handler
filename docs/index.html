@@ -63,7 +63,10 @@
 <dd><p>Asynchronously streams a file as the response.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>argument</strong> – Takes the class <strong>DownloadHandler</strong> as an argument.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feed</strong> – Takes the class <strong>GetPhrase</strong> as an argument.</p></li>
+<li><p><strong>argument</strong> – Takes the class <strong>DownloadHandler</strong> as an argument.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns the download-able version of the file.</p>
@@ -84,6 +87,26 @@
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="auth_apikey.list_directory">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth_apikey.</span></span><span class="sig-name descname"><span class="pre">list_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.GetPhrase" title="models.classes.GetPhrase"><span class="pre">models.classes.GetPhrase</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(NoneType)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.ListHandler" title="models.classes.ListHandler"><span class="pre">models.classes.ListHandler</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(NoneType)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#auth_apikey.list_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists all the files in a directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feed</strong> – Authentication apikey.</p></li>
+<li><p><strong>argument</strong> – Takes the file path as an argument.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns a dictionary of files and directories in the given path.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -292,6 +315,28 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="models.classes.GetPhrase.apikey">
 <span class="sig-name descname"><span class="pre">apikey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.classes.GetPhrase.apikey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.classes.ListHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.classes.</span></span><span class="sig-name descname"><span class="pre">ListHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FilePath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.classes.ListHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>BaseModel that handles input data for the API which is treated as members for the class <code class="docutils literal notranslate"><span class="pre">ListHandler</span></code>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ListHandler</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><cite>FilePath</cite>: Defaults to server’s directory.</p></li>
+</ul>
+</div>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.classes.ListHandler.FilePath">
+<span class="sig-name descname"><span class="pre">FilePath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.classes.ListHandler.FilePath" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
