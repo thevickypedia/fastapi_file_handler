@@ -1,11 +1,13 @@
 from os import getcwd
 from typing import Optional
+from tortoise import fields
+from tortoise.models import Model
 
 from pydantic import BaseModel
 
 
 class DownloadHandler(BaseModel):
-    """BaseModel that handles input data for the API which is treated as members for the class DownloadHandler.
+    """BaseModel that handles input data for the API which is treated as members for the class ``DownloadHandler``.
 
     >>> DownloadHandler
 
@@ -16,7 +18,7 @@ class DownloadHandler(BaseModel):
 
 
 class UploadHandler(BaseModel):
-    """BaseModel that handles input data for the API which is treated as members for the class UploadHandler.
+    """BaseModel that handles input data for the API which is treated as members for the class ``UploadHandler``.
 
     >>> UploadHandler
 
@@ -31,8 +33,16 @@ class GetPhrase(BaseModel):
 
     >>> GetPhrase
 
-    See Also:
-        - ``phrase``: Secret phrase to authenticate the request sent to the API.
     """
 
     apikey: str
+
+
+class Bogus(Model):
+    """Model that handles input data for the API which is treated as members for the class ``Bogus``.
+
+    >>> Bogus
+
+    """
+
+    authentication: str = fields.CharField(50)
