@@ -14,8 +14,11 @@ from fastapi.responses import FileResponse, RedirectResponse
 
 from models.classes import (DownloadHandler, GetPhrase, ListHandler,
                             UploadHandler)
+from models.filters import APIKeyFilter, EndpointFilter
 
 __module__ = PurePath(__file__).stem
+getLogger("uvicorn.access").addFilter(EndpointFilter())
+getLogger("uvicorn.access").addFilter(APIKeyFilter())
 LOGGER = getLogger(__module__)
 environ['module'] = __module__
 
@@ -103,6 +106,7 @@ async def list_directory(feed: GetPhrase = Depends(), argument: ListHandler = De
     file_path = argument.FilePath
 
     if path.isfile(file_path):
+        LOGGER.error(f'Not a directory: {file_path}')
         raise HTTPException(status_code=400, detail=status.HTTP_400_BAD_REQUEST)
 
     if file_path == '~':
@@ -113,6 +117,7 @@ async def list_directory(feed: GetPhrase = Depends(), argument: ListHandler = De
     else:
         raise HTTPException(status_code=404, detail=status.HTTP_404_NOT_FOUND)
 
+    LOGGER.info(f'Listing: {file_path}')
     file_listing = {"files": [entry for entry in dir_list if path.isfile(f'{file_path}{path.sep}{entry}')
                     if not entry.startswith('.')]}
     dir_listing = {"directories": [entry for entry in dir_list if path.isdir(f'{file_path}{path.sep}{entry}')
@@ -123,6 +128,9 @@ async def list_directory(feed: GetPhrase = Depends(), argument: ListHandler = De
         return {file_path: file_listing}
     elif dir_listing:
         return {file_path: dir_listing}
+    else:
+        LOGGER.warning(f"No Content: {file_path}")
+        raise HTTPException(status_code=204, detail=status.HTTP_204_NO_CONTENT)
 
 
 @app.get("/download-file")
@@ -157,12 +165,13 @@ async def upload_file(feed: GetPhrase = Depends(), upload: UploadHandler = Depen
     """Allows the user to send a ``POST`` request to upload a file to the server.
 
     Args:
-        - upload: Takes the class ``UploadHandler`` as an argument.
-        - data: Takes the file that has to be uploaded as an argument.
+        feed: Authenticates the user.
+        upload: Takes the class ``UploadHandler`` as an argument.
+        data: Takes the file that has to be uploaded as an argument.
 
     Raises:
-        - 200: If file was uploaded successfully.
-        - 500: If the file was not stored.
+        200: If file was uploaded successfully.
+        500: If the file was not stored.
     """
     verify_auth(apikey=feed.apikey)
     if not (filename := upload.FileName):

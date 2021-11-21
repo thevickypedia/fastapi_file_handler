@@ -138,14 +138,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>- upload</strong> – Takes the class <code class="docutils literal notranslate"><span class="pre">UploadHandler</span></code> as an argument.</p></li>
-<li><p><strong>- data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
+<li><p><strong>feed</strong> – Authenticates the user.</p></li>
+<li><p><strong>upload</strong> – Takes the class <code class="docutils literal notranslate"><span class="pre">UploadHandler</span></code> as an argument.</p></li>
+<li><p><strong>data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>- 200</strong> – If file was uploaded successfully.</p></li>
-<li><p><strong>- 500</strong> – If the file was not stored.</p></li>
+<li><p><strong>200</strong> – If file was uploaded successfully.</p></li>
+<li><p><strong>500</strong> – If the file was not stored.</p></li>
 </ul>
 </dd>
 </dl>
@@ -292,6 +293,69 @@
 </dd></dl>
 
 </section>
+<section id="module-models.filters">
+<span id="models-filters"></span><h1>Models - Filters<a class="headerlink" href="#module-models.filters" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="models.filters.APIKeyFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.filters.</span></span><span class="sig-name descname"><span class="pre">APIKeyFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.filters.APIKeyFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to initiate <code class="docutils literal notranslate"><span class="pre">/investment</span></code> filter in logs while preserving other access logs.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">APIKeyFilter</span>
+</pre></div>
+</div>
+<p>Initialize a filter.</p>
+<p>Initialize with the name of the logger which, together with its
+children, will have its events allowed through the filter. If no
+name is specified, allow every event.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="models.filters.APIKeyFilter.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">logging.LogRecord</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#models.filters.APIKeyFilter.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter out logging at <code class="docutils literal notranslate"><span class="pre">?apikey=</span></code> from log streams.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>record</strong> – <code class="docutils literal notranslate"><span class="pre">LogRecord</span></code> represents an event which is created every time something is logged.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>False flag for the endpoint that needs to be filtered.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.filters.EndpointFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.filters.</span></span><span class="sig-name descname"><span class="pre">EndpointFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.filters.EndpointFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to initiate <code class="docutils literal notranslate"><span class="pre">/docs</span></code> filter in logs while preserving other access logs.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">EndpointFilter</span>
+</pre></div>
+</div>
+<p>Initialize a filter.</p>
+<p>Initialize with the name of the logger which, together with its
+children, will have its events allowed through the filter. If no
+name is specified, allow every event.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="models.filters.EndpointFilter.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">logging.LogRecord</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#models.filters.EndpointFilter.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter out logging at <code class="docutils literal notranslate"><span class="pre">/docs</span></code> from log streams.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>record</strong> – <code class="docutils literal notranslate"><span class="pre">LogRecord</span></code> represents an event which is created every time something is logged.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>False flag for the endpoint that needs to be filtered.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-models.classes">
 <span id="models-classes"></span><h1>Models - Classes<a class="headerlink" href="#module-models.classes" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
@@ -426,6 +490,7 @@
 <li><a class="reference internal" href="#module-auth_apikey">FileHandler - APIKey Authentication</a></li>
 <li><a class="reference internal" href="#module-auth_server">FileHandler - Server Authentication</a></li>
 <li><a class="reference internal" href="#module-models.secrets">Models - Secrets</a></li>
+<li><a class="reference internal" href="#module-models.filters">Models - Filters</a></li>
 <li><a class="reference internal" href="#module-models.classes">Models - Classes</a></li>
 <li><a class="reference internal" href="#module-models.config">Models - Custom Logging</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>

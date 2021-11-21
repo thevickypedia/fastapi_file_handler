@@ -34,6 +34,13 @@ Models - Secrets
    :members:
    :undoc-members:
 
+Models - Filters
+================
+
+.. automodule:: models.filters
+   :members:
+   :undoc-members:
+
 Models - Classes
 ================
 

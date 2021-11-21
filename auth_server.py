@@ -12,9 +12,11 @@ from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from models.classes import Bogus, DownloadHandler, ListHandler, UploadHandler
+from models.filters import EndpointFilter
 from models.secrets import Secrets
 
 __module__ = PurePath(__file__).stem
+getLogger("uvicorn.access").addFilter(EndpointFilter())
 LOGGER = getLogger(__module__)
 environ['module'] = __module__
 
