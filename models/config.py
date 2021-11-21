@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class LogConfig(BaseModel):
-    """Custom log configuration.
+    """Custom log configuration that matches uvicorn log format.
 
     >>> LogConfig
 
