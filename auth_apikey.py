@@ -85,7 +85,6 @@ def health() -> dict:
     return {'Message': 'Healthy'}
 
 
-# noinspection PyShadowingNames
 @app.get("/download_file")
 async def download_file(feed: GetPhrase = Depends(), argument: DownloadHandler = Depends()):
     """# Asynchronously streams a file as the response.
@@ -112,7 +111,6 @@ async def download_file(feed: GetPhrase = Depends(), argument: DownloadHandler =
         raise HTTPException(status_code=404, detail=status.HTTP_404_NOT_FOUND)
 
 
-# noinspection PyShadowingNames
 @app.post("/upload_file")
 async def upload_file(feed: GetPhrase = Depends(), upload: UploadHandler = Depends(), data: UploadFile = File(...)):
     """# Allows the user to send a ``POST`` request to upload a file to the server.

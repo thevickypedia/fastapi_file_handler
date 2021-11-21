@@ -1,5 +1,8 @@
+from base64 import urlsafe_b64encode
 from logging import getLogger
+from os import environ
 from typing import Union
+from uuid import uuid1
 
 import jwt
 from fastapi import Depends, HTTPException, status
@@ -9,8 +12,8 @@ from models.classes import Login
 from models.user_models import CustomModels
 
 LOGGER = getLogger(__name__)
-JWT_SECRET = 'CHANGEME'
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
+JWT_SECRET = environ.get('JWT_SECRET', urlsafe_b64encode(uuid1().bytes).rstrip(b'=').decode('ascii'))
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='generate-token')
 
 
 async def authenticate_user(username: str, password: str) -> Union[Login, bool]:

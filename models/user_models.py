@@ -1,7 +1,7 @@
 from tortoise.contrib.pydantic import pydantic_model_creator
 from tortoise.models import Model
 
-from models.classes import Login
+from models.classes import Login, CreateLogin
 
 
 class CustomModels(Model):
@@ -14,4 +14,4 @@ class CustomModels(Model):
         - ``User_i_Model``: Used only to create the main user profile.
     """
     User_Model = pydantic_model_creator(Login, name='user')
-    User_i_Model = pydantic_model_creator(Login, name='UserIn', exclude_readonly=True)
+    User_i_Model = pydantic_model_creator(CreateLogin, name='UserIn', exclude_readonly=True)

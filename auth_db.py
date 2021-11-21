@@ -7,9 +7,9 @@ from socket import gethostbyname
 import jwt
 import uvicorn
 from fastapi import FastAPI, Depends, status
+from fastapi.exceptions import HTTPException
 from fastapi.responses import RedirectResponse
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi.exceptions import HTTPException
 from passlib.hash import bcrypt
 from tortoise.contrib.fastapi import register_tortoise
 
@@ -57,15 +57,22 @@ def health() -> dict:
     return {'Message': 'Healthy'}
 
 
-@app.post('/token')
+@app.post('/generate-token')  # Endpoint should match with the tokenUrl of oauth2_scheme in authenticator.py
 async def generate_token(form_data: OAuth2PasswordRequestForm = Depends()) -> dict:
     """# Generates a jwt for the credentials received.
 
     ## Args:
-        form_data: Takes the OAuth2PasswordRequestForm model as an argument.
+    **form_data:** Takes the ``OAuth2PasswordRequestForm`` model as an argument.
 
     ## Returns:
-        Returns a dictionary of access_token and token_type.
+    Returns a dictionary of ``access_token`` and ``token_type``
+
+    ## See Also:
+    **- This function is enabled only for test purpose.**
+
+    **- The actual working of the working is done using the endpoint ``generate-token``**
+
+    **- It is passed as ``tokenUrl`` to the ``fastapi`` class ``OAuth2PasswordBearer`` which is our ``oauth2_scheme``**
     """
     user = await authenticate_user(form_data.username, form_data.password)
     if not user:
@@ -75,8 +82,7 @@ async def generate_token(form_data: OAuth2PasswordRequestForm = Depends()) -> di
     return {'access_token': token, 'token_type': 'bearer'}
 
 
-# noinspection PyUnresolvedReferences
-@app.post('/users', response_model=custom_models.User_Model)
+@app.post('/create-user', response_model=custom_models.User_Model)
 async def create_user(user: custom_models.User_i_Model):
     """# Creates a new user profile and stores it in the database.
 
@@ -86,7 +92,7 @@ async def create_user(user: custom_models.User_i_Model):
     ## Returns:
         Returns a PyDantic model.
     """
-    user_obj = Login(username=user.username, password_hash=bcrypt.hash(user.password_hash))
+    user_obj = Login(username=user.username, password_hash=bcrypt.hash(user.password))
     await user_obj.save()
     LOGGER.info('sqlite3 db.UserProfiles')
     LOGGER.info('SELECT * FROM login;')
@@ -94,7 +100,7 @@ async def create_user(user: custom_models.User_i_Model):
 
 
 @app.get('/authenticate', response_model=custom_models.User_Model)
-async def auth_user(user: custom_models.User_Model = Depends(get_current_user)):
+async def authenticate(user: custom_models.User_Model = Depends(get_current_user)):
     """# Authenticates any user per the information stored in the database.
 
     ## Args:
@@ -123,7 +129,7 @@ if __name__ == '__main__':
     argument_dict = {
         "app": f"{__module__ or __name__}:app",
         "host": gethostbyname('localhost'),
-        "port": int(environ.get('port', 1914)),
+        "port": int(environ.get('port', 1918)),
         "reload": True
     }
     uvicorn.run(**argument_dict)
