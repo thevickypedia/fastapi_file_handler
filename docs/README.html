@@ -44,6 +44,15 @@
   <section id="api-file-handler">
 <h1>API File Handler<a class="headerlink" href="#api-file-handler" title="Permalink to this headline">¶</a></h1>
 <p>Upload and download files using FastAPI</p>
+<section id="usage">
+<h2>Usage:<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/thevickypedia/api_file_handler/blob/main/auth_apikey.py">auth_apikey.py</a>:
+Authenticates using an APIKey that can be stored as an env var <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code>. Defaults to a randomly generated url safe UUID.</p></li>
+<li><p><a class="reference external" href="https://github.com/thevickypedia/api_file_handler/blob/main/auth_server.py">auth_server.py</a>:
+Authenticates using the server’s <code class="docutils literal notranslate"><span class="pre">USER</span></code> and <code class="docutils literal notranslate"><span class="pre">PASSWORD</span></code>. If password is not available as env var, requests from the user.</p></li>
+</ul>
+</section>
 <section id="pro-tip">
 <h2>PRO-Tip:<a class="headerlink" href="#pro-tip" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -68,6 +77,16 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
 <br>
 <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span> <span class="pre">--all-files</span></code></p>
 </section>
+<section id="runbook">
+<h2>Runbook<a class="headerlink" href="#runbook" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.sphinx-doc.org/en/master/man/sphinx-autogen.html"><img alt="made-with-sphinx-doc" src="https://img.shields.io/badge/Code%20Docs-Sphinx-1f425f.svg" /></a></p>
+<p><a class="reference external" href="https://thevickypedia.github.io/api_file_handler/">https://thevickypedia.github.io/api_file_handler/</a></p>
+</section>
+<section id="license-copyright">
+<h2>License &amp; copyright<a class="headerlink" href="#license-copyright" title="Permalink to this headline">¶</a></h2>
+<p>© Vignesh Sivanandha Rao</p>
+<p>Licensed under the <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/LICENSE">MIT License</a></p>
+</section>
 </section>
 
 
@@ -80,9 +99,12 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">API File Handler</a><ul>
+<li><a class="reference internal" href="#usage">Usage:</a></li>
 <li><a class="reference internal" href="#pro-tip">PRO-Tip:</a></li>
 <li><a class="reference internal" href="#coding-standards">Coding Standards</a></li>
 <li><a class="reference internal" href="#linting">Linting</a></li>
+<li><a class="reference internal" href="#runbook">Runbook</a></li>
+<li><a class="reference internal" href="#license-copyright">License &amp; copyright</a></li>
 </ul>
 </li>
 </ul>
