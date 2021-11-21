@@ -1,7 +1,7 @@
 from datetime import datetime
 from logging import getLogger
 from logging.config import dictConfig
-from os import environ, path, stat
+from os import environ, listdir, path, stat
 from pathlib import PurePath
 from socket import gethostbyname
 
@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from models.classes import Bogus, DownloadHandler, UploadHandler
+from models.classes import Bogus, DownloadHandler, ListHandler, UploadHandler
 from models.secrets import Secrets
 
 __module__ = PurePath(__file__).stem
@@ -92,12 +92,52 @@ def health() -> dict:
 
 
 # noinspection PyShadowingNames
-@app.get("/download_file")
+@app.get("/list-directory")
+async def list_directory(authenticator: dict = Depends(oauth2_scheme), argument: ListHandler = Depends()) -> dict:
+    """Lists all the files in a directory.
+
+    Args:
+        authenticator: Authenticates the user.
+        argument: Takes the file path as an argument.
+
+    Returns:
+        dict:
+        Returns a dictionary of files and directories in the given path.
+    """
+    await Bogus(authentication=authenticator)
+    file_path = argument.FilePath
+
+    if path.isfile(file_path):
+        raise HTTPException(status_code=400, detail=status.HTTP_400_BAD_REQUEST)
+
+    if file_path == '~':
+        file_path = path.expanduser('~')
+        dir_list = listdir(file_path)
+    elif path.exists(file_path):
+        dir_list = listdir(file_path)
+    else:
+        raise HTTPException(status_code=404, detail=status.HTTP_404_NOT_FOUND)
+
+    file_listing = {"files": [entry for entry in dir_list if path.isfile(f'{file_path}{path.sep}{entry}')
+                    if not entry.startswith('.')]}
+    dir_listing = {"directories": [entry for entry in dir_list if path.isdir(f'{file_path}{path.sep}{entry}')
+                   if not entry.startswith('.')]}
+    if file_listing and dir_listing:
+        return {file_path: dict(dir_listing, **file_listing)}  # Concatenates two dictionaries
+    elif file_listing:
+        return {file_path: file_listing}
+    elif dir_listing:
+        return {file_path: dir_listing}
+
+
+# noinspection PyShadowingNames
+@app.get("/download-file")
 async def download_file(argument: DownloadHandler = Depends(),
                         authenticator: dict = Depends(oauth2_scheme)) -> FileResponse:
     """Asynchronously streams a file as the response.
 
     Args:
+        authenticator: Authenticates the user.
         argument: Takes the class **DownloadHandler** as an argument.
 
     Returns:
@@ -120,7 +160,7 @@ async def download_file(argument: DownloadHandler = Depends(),
 
 
 # noinspection PyShadowingNames
-@app.post("/upload_file")
+@app.post("/upload-file")
 async def upload_file(upload: UploadHandler = Depends(), data: UploadFile = File(...),
                       authenticator: dict = Depends(oauth2_scheme)) -> None:
     """Allows the user to send a ``POST`` request to upload a file to the server.
@@ -164,7 +204,7 @@ if __name__ == '__main__':
     argument_dict = {
         "app": f"{__module__ or __name__}:app",
         "host": gethostbyname('localhost'),
-        "port": int(environ.get('port', 1914)),
+        "port": int(environ.get('port', 1918)),
         "reload": True
     }
     uvicorn.run(**argument_dict)
