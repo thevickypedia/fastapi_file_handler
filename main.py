@@ -1,14 +1,24 @@
+from base64 import urlsafe_b64encode
 from datetime import datetime
-from os import environ, path, stat, getcwd
+from logging import getLogger
+from logging.config import dictConfig
+from os import environ, path, stat
 from pathlib import PurePath
 from socket import gethostbyname
-from typing import Optional
+from uuid import uuid1
 
 import uvicorn
-from fastapi import FastAPI, UploadFile, File, HTTPException, Depends
+from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
-from pydantic import BaseModel
+
+from models.classes import UploadHandler, DownloadHandler, GetPhrase
+
+__module__ = PurePath(__file__).stem
+LOGGER = getLogger(__module__)
+environ['module'] = __module__
+
+APIKEY = environ.get('APIKEY', urlsafe_b64encode(uuid1().bytes).rstrip(b'=').decode('ascii'))
 
 app = FastAPI(
     title="FileHandler API",
@@ -31,24 +41,26 @@ app.add_middleware(
 )
 
 
-class DownloadHandler(BaseModel):
-    """BaseModel that handles input data for the API which is treated as members for the class DownloadHandler.
+def verify_auth(apikey: str) -> None:
+    """Authenticates the APIKEY.
 
-    >>> DownloadHandler
+    Args:
+        apikey: Takes the APIKEY entered by the user as an argument.
 
+    Raises:
+        401: If auth fails.
     """
-    FileName: str
-    FilePath: str = getcwd()
+    if apikey != APIKEY:
+        LOGGER.error(f'Authentication Failed: {apikey}')
+        raise HTTPException(status_code=401, detail=status.HTTP_401_UNAUTHORIZED)
+    LOGGER.info('Authentication Success')
 
 
-class UploadHandler(BaseModel):
-    """BaseModel that handles input data for the API which is treated as members for the class UploadHandler.
-
-    >>> UploadHandler
-
-    """
-    FileName: Optional[str]
-    FilePath: str = getcwd()
+@app.on_event(event_type='startup')
+async def startup_event():
+    from models.config import LogConfig
+    dictConfig(config=LogConfig().dict())
+    LOGGER.info(f'Authentication Bearer: {APIKEY}')
 
 
 @app.get('/', response_class=RedirectResponse, include_in_schema=False)
@@ -63,7 +75,7 @@ async def redirect_index() -> str:
 
 
 @app.get('/status', include_in_schema=False)
-def status() -> dict:
+def health() -> dict:
     """Health Check for FileFeeder.
 
     Returns:
@@ -73,8 +85,9 @@ def status() -> dict:
     return {'Message': 'Healthy'}
 
 
+# noinspection PyShadowingNames
 @app.get("/download_file")
-async def download_file(argument: DownloadHandler = Depends()) -> FileResponse:
+async def download_file(feed: GetPhrase = Depends(), argument: DownloadHandler = Depends()):
     """# Asynchronously streams a file as the response.
 
     ## Args:
@@ -84,19 +97,24 @@ async def download_file(argument: DownloadHandler = Depends()) -> FileResponse:
     `FileResponse:`
     Returns the download-able version of the file.
     """
+    verify_auth(apikey=feed.apikey)
     file_name = argument.FileName
     file_path = f'{argument.FilePath}{path.sep}{file_name}'
     if path.isfile(path=file_path):
         if file_name.startswith('.'):
+            LOGGER.warning(f'Access Denied: {file_name}')
             raise HTTPException(status_code=403, detail='Dot (.) files cannot be downloaded over API.')
         else:
+            LOGGER.info(f'Download Requested: {file_name}')
             return FileResponse(path=file_path, media_type='application/octet-stream', filename=file_name)
     else:
-        raise HTTPException(status_code=404, detail='File not present.')
+        LOGGER.error(f'File Not Found: {file_name}')
+        raise HTTPException(status_code=404, detail=status.HTTP_404_NOT_FOUND)
 
 
+# noinspection PyShadowingNames
 @app.post("/upload_file")
-async def upload_file(upload: UploadHandler = Depends(), data: UploadFile = File(...)):
+async def upload_file(feed: GetPhrase = Depends(), upload: UploadHandler = Depends(), data: UploadFile = File(...)):
     """# Allows the user to send a ``POST`` request to upload a file to the server.
 
     ## Args:
@@ -107,6 +125,7 @@ async def upload_file(upload: UploadHandler = Depends(), data: UploadFile = File
         - 200: If file was uploaded successfully.
         - 500: If the file was not stored.
     """
+    verify_auth(apikey=feed.apikey)
     if not (filename := upload.FileName):
         filename = data.filename
     if (filepath := upload.FilePath) and (filepath.endswith(filename)):
@@ -120,18 +139,22 @@ async def upload_file(upload: UploadHandler = Depends(), data: UploadFile = File
     with open(filename, 'wb') as file:
         file.write(content)
 
+    file_name = filename.split(path.sep)[-1]
     if path.isfile(filename):
         if not int(datetime.now().timestamp()) - int(stat(filename).st_mtime):
-            raise HTTPException(status_code=200, detail=f'{filename} was uploaded to server.')
+            LOGGER.info(f'Uploaded File: {file_name}')
+            raise HTTPException(status_code=200, detail=f'{file_name} was uploaded to server.')
         else:
+            LOGGER.error(f'Failed to store: {file_name}')
             raise HTTPException(status_code=500, detail=f'Unable to store {filename} in the server.')
     else:
+        LOGGER.error(f'Failed to store: {file_name}')
         raise HTTPException(status_code=500, detail=f'Unable to upload {filename} to server.')
 
 
 if __name__ == '__main__':
     argument_dict = {
-        "app": f"{PurePath(__file__).stem}:app",
+        "app": f"{__module__ or __name__}:app",
         "host": gethostbyname('localhost'),
         "port": int(environ.get('port', 1914)),
         "reload": True
