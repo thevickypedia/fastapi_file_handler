@@ -17,10 +17,10 @@ from models.executor import Executor
 from models.filters import APIKeyFilter, EndpointFilter
 
 __module__ = PurePath(__file__).stem
+environ['module'] = __module__
 getLogger("uvicorn.access").addFilter(EndpointFilter())
 getLogger("uvicorn.access").addFilter(APIKeyFilter())
 LOGGER = getLogger(__module__)
-environ['module'] = __module__
 
 APIKEY = environ.get('APIKEY', urlsafe_b64encode(uuid1().bytes).rstrip(b'=').decode('ascii'))
 task_executor = Executor()
@@ -53,7 +53,8 @@ def verify_auth(apikey: str) -> None:
         apikey: Takes the APIKEY entered by the user as an argument.
 
     Raises:
-        401: If auth fails.
+        HTTPExceptions:
+        - 401: If authentication fails.
     """
     if apikey != APIKEY:
         LOGGER.error(f'Authentication Failed: {apikey}')
@@ -135,10 +136,6 @@ async def upload_file(feed: GetPhrase = Depends(),
         feed: Authenticates the user request.
         upload: Takes the class ``UploadHandler`` as an argument.
         data: Takes the file that has to be uploaded as an argument.
-
-    Raises:
-        200: If file was uploaded successfully.
-        500: If the file was not stored.
     """
     verify_auth(apikey=feed.apikey)
     await task_executor.execute_upload_file(argument=upload, data=data)

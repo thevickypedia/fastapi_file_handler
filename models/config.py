@@ -14,7 +14,7 @@ class LogConfig(BaseModel):
     """
 
     if not environ.get('COMMIT'):
-        LOGGER_NAME: str = environ['module']
+        LOGGER_NAME: str = environ.get('module', __name__)
         LOG_FORMAT: str = '%(levelname)s:\t  %(message)s'
         LOG_LEVEL: str = "DEBUG"
 

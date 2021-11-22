@@ -12,8 +12,8 @@ class DownloadHandler(BaseModel):
     >>> DownloadHandler
 
     See Also:
-        - `FileName`: Takes filename as value.
-        - `FilePath`: Defaults to server's directory.
+        - ``FileName``: Takes filename as value.
+        - ``FilePath``: Defaults to server's directory.
     """
 
     if not environ.get('COMMIT'):
@@ -27,8 +27,8 @@ class UploadHandler(BaseModel):
     >>> UploadHandler
 
     See Also:
-        - `FileName`: Takes filename as an optional value.
-        - `FilePath`: Defaults to server's directory.
+        - ``FileName``: Takes filename as an optional value.
+        - ``FilePath``: Defaults to server's directory.
     """
 
     if not environ.get('COMMIT'):
@@ -42,7 +42,7 @@ class ListHandler(BaseModel):
     >>> ListHandler
 
     See Also:
-        - `FilePath`: Defaults to server's directory.
+        - ``FilePath``: Defaults to server's directory.
     """
 
     FilePath: str

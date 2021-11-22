@@ -146,12 +146,6 @@
 <li><p><strong>data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>200</strong> – If file was uploaded successfully.</p></li>
-<li><p><strong>500</strong> – If the file was not stored.</p></li>
-</ul>
-</dd>
 </dl>
 </dd></dl>
 
@@ -164,7 +158,10 @@
 <dd class="field-odd"><p><strong>apikey</strong> – Takes the APIKEY entered by the user as an argument.</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>401</strong> – If auth fails.</p>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPExceptions</strong> – </p></li>
+<li><p><strong>- 401</strong> – If authentication fails.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -185,6 +182,12 @@
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPExceptions</strong> – </p></li>
+<li><p><strong>- 401</strong> – If user is unauthorized.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -273,12 +276,6 @@
 <li><p><strong>authenticator</strong> – Authenticates the user request.</p></li>
 <li><p><strong>upload</strong> – Takes the class <cite>UploadHandler</cite> as an argument.</p></li>
 <li><p><strong>data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>- 200</strong> – If file was uploaded successfully.</p></li>
-<li><p><strong>- 500</strong> – If the file was not stored.</p></li>
 </ul>
 </dd>
 </dl>
@@ -386,8 +383,8 @@ name is specified, allow every event.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p><cite>FileName</cite>: Takes filename as value.</p></li>
-<li><p><cite>FilePath</cite>: Defaults to server’s directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FileName</span></code>: Takes filename as value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FilePath</span></code>: Defaults to server’s directory.</p></li>
 </ul>
 </div>
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
@@ -420,7 +417,7 @@ name is specified, allow every event.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p><cite>FilePath</cite>: Defaults to server’s directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FilePath</span></code>: Defaults to server’s directory.</p></li>
 </ul>
 </div>
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
@@ -442,8 +439,8 @@ name is specified, allow every event.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p><cite>FileName</cite>: Takes filename as an optional value.</p></li>
-<li><p><cite>FilePath</cite>: Defaults to server’s directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FileName</span></code>: Takes filename as an optional value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FilePath</span></code>: Defaults to server’s directory.</p></li>
 </ul>
 </div>
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
@@ -460,6 +457,11 @@ name is specified, allow every event.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Executor</span>
 </pre></div>
 </div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.executor.Executor.LOGGER">
+<span class="sig-name descname"><span class="pre">LOGGER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">models.executor</span> <span class="pre">(WARNING)&gt;</span></em><a class="headerlink" href="#models.executor.Executor.LOGGER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="models.executor.Executor.execute_download_file">
 <em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute_download_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.DownloadHandler" title="models.classes.DownloadHandler"><span class="pre">models.classes.DownloadHandler</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.FileResponse</span></span></span><a class="headerlink" href="#models.executor.Executor.execute_download_file" title="Permalink to this definition">¶</a></dt>
@@ -473,6 +475,13 @@ name is specified, allow every event.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>FileResponse</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPExceptions</strong> – </p></li>
+<li><p><strong>- 403</strong> – If a dot (.) file is requested.</p></li>
+<li><p><strong>- 404</strong> – If the file doesn’t exist.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -491,7 +500,21 @@ name is specified, allow every event.</p>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPExceptions</strong> – </p></li>
+<li><p><strong>- 400</strong> – If a file name is specified instead of file path.</p></li>
+<li><p><strong>- 404</strong> – If the file path doesn’t exist.</p></li>
+</ul>
+</dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>Detail not specified for <code class="docutils literal notranslate"><span class="pre">204</span></code> since, any response to a <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> request and any response with a
+<code class="docutils literal notranslate"><span class="pre">1xx</span></code> (Informational), <code class="docutils literal notranslate"><span class="pre">204</span></code> (No Content), or <code class="docutils literal notranslate"><span class="pre">304</span></code> (Not Modified) status codes are always
+terminated by the first empty line after the header fields, regardless of the header fields present
+in the message, and thus cannot contain a message body.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -503,6 +526,13 @@ name is specified, allow every event.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>argument</strong> – Takes the class <code class="docutils literal notranslate"><span class="pre">UploadHandler</span></code> as an argument.</p></li>
 <li><p><strong>data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPExceptions</strong> – </p></li>
+<li><p><strong>- 200</strong> – If file was uploaded successfully.</p></li>
+<li><p><strong>- 500</strong> – If failed to upload file to server.</p></li>
 </ul>
 </dd>
 </dl>

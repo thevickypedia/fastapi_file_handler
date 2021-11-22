@@ -62,6 +62,10 @@ async def authenticator(form_data: OAuth2PasswordRequestForm = Depends()) -> dic
     Returns:
         dict:
         A dictionary of access token.
+
+    Raises:
+        HTTPExceptions:
+        - 401: If user is unauthorized.
     """
     if form_data.username == Secrets.USERNAME and form_data.password == Secrets.PASSWORD:
         LOGGER.info('Authentication Successful')
@@ -142,10 +146,6 @@ async def upload_file(upload: UploadHandler = Depends(),
         authenticator: Authenticates the user request.
         upload: Takes the class `UploadHandler` as an argument.
         data: Takes the file that has to be uploaded as an argument.
-
-    Raises:
-        - 200: If file was uploaded successfully.
-        - 500: If the file was not stored.
     """
     await Bogus(authentication=authenticator)
     await task_executor.execute_upload_file(argument=upload, data=data)
