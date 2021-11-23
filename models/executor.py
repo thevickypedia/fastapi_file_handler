@@ -111,10 +111,15 @@ class Executor(Model):
             HTTPExceptions:
             - 200: If file was uploaded successfully.
             - 500: If failed to upload file to server.
+            - 404: If file path is null or does not exist.
         """
+        if not (filepath := argument.FilePath):
+            raise HTTPException(status_code=404, detail='FilePath cannot be a `null` value')
+        if not path.exists(filepath):
+            raise HTTPException(status_code=404, detail=status.HTTP_404_NOT_FOUND)
         if not (filename := argument.FileName):
             filename = data.filename
-        if (filepath := argument.FilePath) and (filepath.endswith(filename)):
+        if filepath.endswith(filename):
             filename = filepath
         else:
             if filepath.endswith(path.sep):
