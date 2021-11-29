@@ -1,13 +1,14 @@
 # API File Handler
 Upload and download files using FastAPI
 
-### Usage:
+### Usage
 - [auth_apikey.py](https://github.com/thevickypedia/api_file_handler/blob/main/auth_apikey.py):
 Authenticates using an APIKey that can be stored as an env var `APIKEY`. Defaults to a randomly generated url safe UUID.
 - [auth_server.py](https://github.com/thevickypedia/api_file_handler/blob/main/auth_server.py):
 Authenticates using the server's `USER` and `PASSWORD`. If password is not available as env var, requests from the user.
 
-### PRO-Tip:
+### PRO-Tip
+- [jprq](https://github.com/azimjohn/jprq-python-client)
 - [localtunnel](https://theboroer.github.io/localtunnel-www/)
 - [ngrok](https://ngrok.com/docs)
 

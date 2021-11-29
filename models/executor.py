@@ -134,10 +134,10 @@ class Executor(Model):
         if path.isfile(filename):
             if not int(datetime.now().timestamp()) - int(stat(filename).st_mtime):
                 cls.LOGGER.info(f'Uploaded File: {file_name}')
-                raise HTTPException(status_code=200, detail=f'{file_name} was uploaded to server.')
+                raise HTTPException(status_code=200, detail=f'{file_name} was uploaded to {filepath}.')
             else:
                 cls.LOGGER.error(f'Failed to store: {file_name}')
-                raise HTTPException(status_code=500, detail=f'Unable to store {filename} in the server.')
+                raise HTTPException(status_code=500, detail=f'Unable to store {filename} in the {filepath}.')
         else:
             cls.LOGGER.error(f'Failed to store: {file_name}')
-            raise HTTPException(status_code=500, detail=f'Unable to upload {filename} to server.')
+            raise HTTPException(status_code=500, detail=f'Unable to upload {filename} to {filepath}.')
