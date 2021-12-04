@@ -5,7 +5,8 @@ set -e
 
 rm -rf docs
 mkdir docs
-export COMMIT=1  # env var set to be consumed by models/config.py
-mkdir -p doc_generator/_static  # creates a _static folder if unavailable
+mkdir -p doc_generator/_static  # Creates a _static folder if unavailable
+[ -z "$PASSWORD" ] && export PASSWORD="None"  # Sets the PASSWORD env var if unavailable
 cp README.md doc_generator && cd doc_generator && make clean html && mv _build/html/* ../docs && rm README.md
+if [[ $PASSWORD == "None" ]] ; then unset PASSWORD; else :; fi  # Unsets PASSWORD env var, if it was set by this script
 touch ../docs/.nojekyll

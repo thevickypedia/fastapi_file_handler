@@ -294,11 +294,11 @@
 </dd></dl>
 
 </section>
-<section id="module-models.filters">
-<span id="models-filters"></span><h1>Models - Filters<a class="headerlink" href="#module-models.filters" title="Permalink to this headline">¶</a></h1>
+<section id="models-filters">
+<h1>Models - Filters<a class="headerlink" href="#models-filters" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="models.filters.APIKeyFilter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.filters.</span></span><span class="sig-name descname"><span class="pre">APIKeyFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.filters.APIKeyFilter" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.filters.</span></span><span class="sig-name descname"><span class="pre">APIKeyFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logging.Filter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.filters.APIKeyFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to initiate <code class="docutils literal notranslate"><span class="pre">/investment</span></code> filter in logs while preserving other access logs.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">APIKeyFilter</span>
 </pre></div>
@@ -328,7 +328,7 @@ name is specified, allow every event.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="models.filters.EndpointFilter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.filters.</span></span><span class="sig-name descname"><span class="pre">EndpointFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.filters.EndpointFilter" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.filters.</span></span><span class="sig-name descname"><span class="pre">EndpointFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logging.Filter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.filters.EndpointFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to initiate <code class="docutils literal notranslate"><span class="pre">/docs</span></code> filter in logs while preserving other access logs.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">EndpointFilter</span>
 </pre></div>
@@ -357,11 +357,11 @@ name is specified, allow every event.</p>
 </dd></dl>
 
 </section>
-<section id="module-models.classes">
-<span id="models-classes"></span><h1>Models - Classes<a class="headerlink" href="#module-models.classes" title="Permalink to this headline">¶</a></h1>
+<section id="models-classes">
+<h1>Models - Classes<a class="headerlink" href="#models-classes" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="models.classes.Bogus">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.classes.</span></span><span class="sig-name descname"><span class="pre">Bogus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.classes.Bogus" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.classes.</span></span><span class="sig-name descname"><span class="pre">Bogus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tortoise.models.Model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.classes.Bogus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Model that handles input data for the API which is treated as members for the class <code class="docutils literal notranslate"><span class="pre">Bogus</span></code>.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Bogus</span>
 </pre></div>
@@ -375,25 +375,28 @@ name is specified, allow every event.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="models.classes.DownloadHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.classes.</span></span><span class="sig-name descname"><span class="pre">DownloadHandler</span></span><a class="headerlink" href="#models.classes.DownloadHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.classes.</span></span><span class="sig-name descname"><span class="pre">DownloadHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pydantic.BaseModel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.classes.DownloadHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>BaseModel that handles input data for the API which is treated as members for the class <code class="docutils literal notranslate"><span class="pre">DownloadHandler</span></code>.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">DownloadHandler</span>
 </pre></div>
 </div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">FileName</span></code>: Takes filename as value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">FilePath</span></code>: Defaults to server’s directory.</p></li>
-</ul>
-</div>
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
 <p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.classes.DownloadHandler.FileName">
+<span class="sig-name descname"><span class="pre">FileName</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.classes.DownloadHandler.FileName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.classes.DownloadHandler.FilePath">
+<span class="sig-name descname"><span class="pre">FilePath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.classes.DownloadHandler.FilePath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="models.classes.GetPhrase">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.classes.</span></span><span class="sig-name descname"><span class="pre">GetPhrase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apikey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.classes.GetPhrase" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.classes.</span></span><span class="sig-name descname"><span class="pre">GetPhrase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pydantic.BaseModel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.classes.GetPhrase" title="Permalink to this definition">¶</a></dt>
 <dd><p>BaseModel that handles input data for the API which is treated as members for the class <code class="docutils literal notranslate"><span class="pre">GetPhrase</span></code>.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">GetPhrase</span>
 </pre></div>
@@ -409,16 +412,10 @@ name is specified, allow every event.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="models.classes.ListHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.classes.</span></span><span class="sig-name descname"><span class="pre">ListHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FilePath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.classes.ListHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.classes.</span></span><span class="sig-name descname"><span class="pre">ListHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pydantic.BaseModel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.classes.ListHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>BaseModel that handles input data for the API which is treated as members for the class <code class="docutils literal notranslate"><span class="pre">ListHandler</span></code>.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ListHandler</span>
 </pre></div>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">FilePath</span></code>: Defaults to server’s directory.</p></li>
-</ul>
 </div>
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
 <p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
@@ -431,37 +428,35 @@ name is specified, allow every event.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="models.classes.UploadHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.classes.</span></span><span class="sig-name descname"><span class="pre">UploadHandler</span></span><a class="headerlink" href="#models.classes.UploadHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.classes.</span></span><span class="sig-name descname"><span class="pre">UploadHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pydantic.BaseModel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.classes.UploadHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>BaseModel that handles input data for the API which is treated as members for the class <code class="docutils literal notranslate"><span class="pre">UploadHandler</span></code>.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">UploadHandler</span>
 </pre></div>
 </div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">FileName</span></code>: Takes filename as an optional value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">FilePath</span></code>: Defaults to server’s directory.</p></li>
-</ul>
-</div>
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
 <p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.classes.UploadHandler.FileName">
+<span class="sig-name descname"><span class="pre">FileName</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#models.classes.UploadHandler.FileName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.classes.UploadHandler.FilePath">
+<span class="sig-name descname"><span class="pre">FilePath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.classes.UploadHandler.FilePath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
-<section id="module-models.executor">
-<span id="models-executor"></span><h1>Models - Executor<a class="headerlink" href="#module-models.executor" title="Permalink to this headline">¶</a></h1>
+<section id="models-executor">
+<h1>Models - Executor<a class="headerlink" href="#models-executor" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="models.executor.Executor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.executor.</span></span><span class="sig-name descname"><span class="pre">Executor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.executor.Executor" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.executor.</span></span><span class="sig-name descname"><span class="pre">Executor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tortoise.models.Model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.executor.Executor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class to run all the executions when called.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Executor</span>
 </pre></div>
 </div>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.executor.Executor.LOGGER">
-<span class="sig-name descname"><span class="pre">LOGGER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">models.executor</span> <span class="pre">(WARNING)&gt;</span></em><a class="headerlink" href="#models.executor.Executor.LOGGER" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.executor.Executor.execute_download_file">
 <em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute_download_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.DownloadHandler" title="models.classes.DownloadHandler"><span class="pre">models.classes.DownloadHandler</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.FileResponse</span></span></span><a class="headerlink" href="#models.executor.Executor.execute_download_file" title="Permalink to this definition">¶</a></dt>
@@ -542,11 +537,11 @@ in the message, and thus cannot contain a message body.</p>
 </dd></dl>
 
 </section>
-<section id="module-models.config">
-<span id="models-custom-logging"></span><h1>Models - Custom Logging<a class="headerlink" href="#module-models.config" title="Permalink to this headline">¶</a></h1>
+<section id="models-custom-logging">
+<h1>Models - Custom Logging<a class="headerlink" href="#models-custom-logging" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="models.config.LogConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.config.</span></span><span class="sig-name descname"><span class="pre">LogConfig</span></span><a class="headerlink" href="#models.config.LogConfig" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.config.</span></span><span class="sig-name descname"><span class="pre">LogConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pydantic.BaseModel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.config.LogConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Custom log configuration that matches uvicorn log format.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">LogConfig</span>
 </pre></div>
@@ -560,6 +555,46 @@ in the message, and thus cannot contain a message body.</p>
 </div>
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
 <p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.config.LogConfig.LOGGER_NAME">
+<span class="sig-name descname"><span class="pre">LOGGER_NAME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.config.LogConfig.LOGGER_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.config.LogConfig.LOG_FORMAT">
+<span class="sig-name descname"><span class="pre">LOG_FORMAT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.config.LogConfig.LOG_FORMAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.config.LogConfig.LOG_LEVEL">
+<span class="sig-name descname"><span class="pre">LOG_LEVEL</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.config.LogConfig.LOG_LEVEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.config.LogConfig.disable_existing_loggers">
+<span class="sig-name descname"><span class="pre">disable_existing_loggers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#models.config.LogConfig.disable_existing_loggers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.config.LogConfig.formatters">
+<span class="sig-name descname"><span class="pre">formatters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#models.config.LogConfig.formatters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.config.LogConfig.handlers">
+<span class="sig-name descname"><span class="pre">handlers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#models.config.LogConfig.handlers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.config.LogConfig.loggers">
+<span class="sig-name descname"><span class="pre">loggers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#models.config.LogConfig.loggers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.config.LogConfig.version">
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#models.config.LogConfig.version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -585,10 +620,10 @@ in the message, and thus cannot contain a message body.</p>
 <li><a class="reference internal" href="#module-auth_apikey">FileHandler - APIKey Authentication</a></li>
 <li><a class="reference internal" href="#module-auth_server">FileHandler - Server Authentication</a></li>
 <li><a class="reference internal" href="#module-models.secrets">Models - Secrets</a></li>
-<li><a class="reference internal" href="#module-models.filters">Models - Filters</a></li>
-<li><a class="reference internal" href="#module-models.classes">Models - Classes</a></li>
-<li><a class="reference internal" href="#module-models.executor">Models - Executor</a></li>
-<li><a class="reference internal" href="#module-models.config">Models - Custom Logging</a></li>
+<li><a class="reference internal" href="#models-filters">Models - Filters</a></li>
+<li><a class="reference internal" href="#models-classes">Models - Classes</a></li>
+<li><a class="reference internal" href="#models-executor">Models - Executor</a></li>
+<li><a class="reference internal" href="#models-custom-logging">Models - Custom Logging</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 

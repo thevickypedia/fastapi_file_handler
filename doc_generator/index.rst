@@ -33,32 +33,64 @@ Models - Secrets
 .. automodule:: models.secrets
    :members:
    :undoc-members:
+   :exclude-members: USERNAME, PASSWORD
 
 Models - Filters
 ================
 
-.. automodule:: models.filters
+.. autoclass:: models.filters.APIKeyFilter(logging.Filter)
+   :members:
+   :undoc-members:
+
+.. autoclass:: models.filters.EndpointFilter(logging.Filter)
    :members:
    :undoc-members:
 
 Models - Classes
 ================
 
-.. automodule:: models.classes
+.. autoclass:: models.classes.Bogus(tortoise.models.Model)
    :members:
    :undoc-members:
+..
+   :exclude-members: authentication
+
+.. autoclass:: models.classes.DownloadHandler(pydantic.BaseModel)
+   :members:
+   :undoc-members:
+..
+   :exclude-members: FileName, FilePath
+
+.. autoclass:: models.classes.GetPhrase(pydantic.BaseModel)
+   :members:
+   :undoc-members:
+..
+   :exclude-members: apikey
+
+.. autoclass:: models.classes.ListHandler(pydantic.BaseModel)
+   :members:
+   :undoc-members:
+..
+   :exclude-members: FilePath
+
+.. autoclass:: models.classes.UploadHandler(pydantic.BaseModel)
+   :members:
+   :undoc-members:
+..
+   :exclude-members: FileName, FilePath
 
 Models - Executor
 =================
 
-.. automodule:: models.executor
+.. autoclass:: models.executor.Executor(tortoise.models.Model)
    :members:
    :undoc-members:
+   :exclude-members: LOGGER
 
 Models - Custom Logging
 =======================
 
-.. automodule:: models.config
+.. autoclass:: models.config.LogConfig(pydantic.BaseModel)
    :members:
    :undoc-members:
 

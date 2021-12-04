@@ -12,14 +12,13 @@ class Secrets(Model):
 
     """
 
-    if not environ.get('COMMIT'):
-        USERNAME: str = environ.get('USER', path.expanduser('~') or getpwuid(getuid())[0] or getlogin())
-        PASSWORD: str = environ.get('PASSWORD')
+    USERNAME: str = environ.get('USER', path.expanduser('~') or getpwuid(getuid())[0] or getlogin())
+    PASSWORD: str = environ.get('PASSWORD')
 
-        if not USERNAME:
-            USERNAME: str = input(__prompt='Enter username: ')
-            environ['USER'] = USERNAME  # Store as env var so, value remains despite restart
+    if not USERNAME:
+        USERNAME: str = input(__prompt='Enter username: ')
+        environ['USER'] = USERNAME  # Store as env var so, value remains despite restart
 
-        if not PASSWORD:
-            PASSWORD: str = getpass(prompt='Enter PASSWORD: ')
-            environ['PASSWORD'] = PASSWORD  # Store as env var so, value remains despite restart
+    if not PASSWORD:
+        PASSWORD: str = getpass(prompt='Enter PASSWORD: ')
+        environ['PASSWORD'] = PASSWORD  # Store as env var so, value remains despite restart

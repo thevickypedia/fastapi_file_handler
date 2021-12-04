@@ -1,4 +1,4 @@
-from os import environ, getcwd
+from os import getcwd
 from typing import Optional
 
 from pydantic import BaseModel
@@ -11,14 +11,10 @@ class DownloadHandler(BaseModel):
 
     >>> DownloadHandler
 
-    See Also:
-        - ``FileName``: Takes filename as value.
-        - ``FilePath``: Defaults to server's directory.
     """
 
-    if not environ.get('COMMIT'):
-        FileName: str
-        FilePath: str = getcwd()
+    FileName: str
+    FilePath: str = getcwd()
 
 
 class UploadHandler(BaseModel):
@@ -26,14 +22,10 @@ class UploadHandler(BaseModel):
 
     >>> UploadHandler
 
-    See Also:
-        - ``FileName``: Takes filename as an optional value.
-        - ``FilePath``: Defaults to server's directory.
     """
 
-    if not environ.get('COMMIT'):
-        FileName: Optional[str]
-        FilePath: str = getcwd()
+    FileName: Optional[str]
+    FilePath: str = getcwd()
 
 
 class ListHandler(BaseModel):
@@ -41,8 +33,6 @@ class ListHandler(BaseModel):
 
     >>> ListHandler
 
-    See Also:
-        - ``FilePath``: Defaults to server's directory.
     """
 
     FilePath: str
