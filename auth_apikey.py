@@ -27,7 +27,9 @@ task_executor = Executor()
 
 app = FastAPI(
     title="FileHandler API",
-    description="API to upload and download files to and from a server using a randomly generated uuid as apikey.",
+    description="Vignesh's **FileHandler** API to upload and download files to and from a server using a apikey."
+                "\n\n"
+                "**Contact:** [https://vigneshrao.com/contact](https://vigneshrao.com/contact)",
     version="v1.0"
 )
 

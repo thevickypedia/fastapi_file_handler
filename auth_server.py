@@ -24,7 +24,10 @@ task_executor = Executor()
 
 app = FastAPI(
     title="FileHandler API",
-    description="API to upload and download files to and from a server using the server's login credentials.",
+    description="**Description:** Vignesh's **FileHandler** to upload and download files to and from a server using "
+                "the server's login credentials."
+                "\n\n"
+                "**Contact:** [https://vigneshrao.com/contact](https://vigneshrao.com/contact)",
     version="v2.0"
 )
 
