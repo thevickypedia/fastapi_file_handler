@@ -1,9 +1,12 @@
-from os import getcwd
+import os
 from typing import Optional
 
 from pydantic import BaseModel
 from tortoise import fields
 from tortoise.models import Model
+
+if not os.path.isdir('uploads'):
+    os.makedirs('uploads')
 
 
 class DownloadHandler(BaseModel):
@@ -14,7 +17,7 @@ class DownloadHandler(BaseModel):
     """
 
     FileName: str
-    FilePath: str = getcwd()
+    FilePath: str = os.path.expanduser('~')
 
 
 class UploadHandler(BaseModel):
@@ -25,7 +28,7 @@ class UploadHandler(BaseModel):
     """
 
     FileName: Optional[str]
-    FilePath: str = getcwd()
+    FilePath: str = os.path.join(os.getcwd(), 'uploads')
 
 
 class ListHandler(BaseModel):
@@ -36,16 +39,6 @@ class ListHandler(BaseModel):
     """
 
     FilePath: str
-
-
-class GetPhrase(BaseModel):
-    """BaseModel that handles input data for the API which is treated as members for the class ``GetPhrase``.
-
-    >>> GetPhrase
-
-    """
-
-    apikey: str
 
 
 class Bogus(Model):

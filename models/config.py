@@ -1,5 +1,3 @@
-from os import environ
-
 from pydantic import BaseModel
 
 
@@ -13,7 +11,7 @@ class LogConfig(BaseModel):
         - ``LOG_FORMAT`` is set to match the format of ``uvicorn.access`` logs.
     """
 
-    LOGGER_NAME = environ.get('module', __name__)
+    LOGGER_NAME = 'LOGGER'
     LOG_FORMAT = '%(levelname)s:\t  %(message)s'
 
     version = 1

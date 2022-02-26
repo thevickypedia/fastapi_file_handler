@@ -1,6 +1,6 @@
-from getpass import getpass
-from os import environ, getlogin, getuid, path
-from pwd import getpwuid
+import getpass
+import os
+import pwd
 
 from tortoise.models import Model
 
@@ -12,13 +12,13 @@ class Secrets(Model):
 
     """
 
-    USERNAME: str = environ.get('USER', path.expanduser('~') or getpwuid(getuid())[0] or getlogin())
-    PASSWORD: str = environ.get('PASSWORD')
+    USERNAME: str = os.environ.get('USER', os.path.expanduser('~') or pwd.getpwuid(os.getuid())[0] or os.getlogin())
+    PASSWORD: str = os.environ.get('PASSWORD')
 
     if not USERNAME:
         USERNAME: str = input(__prompt='Enter username: ')
-        environ['USER'] = USERNAME  # Store as env var so, value remains despite restart
+        os.environ['USER'] = USERNAME  # Store as env var so, value remains despite restart
 
     if not PASSWORD:
-        PASSWORD: str = getpass(prompt='Enter PASSWORD: ')
-        environ['PASSWORD'] = PASSWORD  # Store as env var so, value remains despite restart
+        PASSWORD: str = getpass.getpass(prompt='Enter PASSWORD: ')
+        os.environ['PASSWORD'] = PASSWORD  # Store as env var so, value remains despite restart

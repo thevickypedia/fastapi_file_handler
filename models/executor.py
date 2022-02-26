@@ -1,6 +1,6 @@
+import os
 from datetime import datetime
 from logging import getLogger
-from os import environ, listdir, path, stat
 
 from fastapi import UploadFile, status
 from fastapi.exceptions import HTTPException
@@ -17,10 +17,9 @@ class Executor(Model):
 
     """
 
-    LOGGER = getLogger(environ.get('module', __name__))
+    LOGGER = getLogger('LOGGER')
 
-    @classmethod
-    async def execute_list_directory(cls, argument: ListHandler) -> dict:
+    async def execute_list_directory(self, argument: ListHandler) -> dict:
         """Executes task for the endpoint ``/list-directory``.
 
         Args:
@@ -43,22 +42,22 @@ class Executor(Model):
         """
         file_path = argument.FilePath
 
-        if path.isfile(file_path):
-            cls.LOGGER.error(f'Not a directory: {file_path}')
+        if os.path.isfile(file_path):
+            self.LOGGER.error(f'Not a directory: {file_path}')
             raise HTTPException(status_code=400, detail=status.HTTP_400_BAD_REQUEST)
 
         if file_path == '~':
-            file_path = path.expanduser('~')
-            dir_list = listdir(file_path)
-        elif path.exists(file_path):
-            dir_list = listdir(file_path)
+            file_path = os.path.expanduser('~')
+            dir_list = os.listdir(file_path)
+        elif os.path.exists(file_path):
+            dir_list = os.listdir(file_path)
         else:
             raise HTTPException(status_code=404, detail=status.HTTP_404_NOT_FOUND)
 
-        cls.LOGGER.info(f'Listing: {file_path}')
-        file_listing = {"files": [entry for entry in dir_list if path.isfile(f'{file_path}{path.sep}{entry}')
+        self.LOGGER.info(f'Listing: {file_path}')
+        file_listing = {"files": [entry for entry in dir_list if os.path.isfile(f'{file_path}{os.path.sep}{entry}')
                                   if not entry.startswith('.')]}
-        dir_listing = {"directories": [entry for entry in dir_list if path.isdir(f'{file_path}{path.sep}{entry}')
+        dir_listing = {"directories": [entry for entry in dir_list if os.path.isdir(f'{file_path}{os.path.sep}{entry}')
                                        if not entry.startswith('.')]}
         if file_listing['files'] and dir_listing['directories']:
             return {file_path: dict(dir_listing, **file_listing)}  # Concatenates two dictionaries
@@ -67,11 +66,10 @@ class Executor(Model):
         elif dir_listing['directories']:
             return {file_path: dir_listing}
         else:
-            cls.LOGGER.info(f"No Content: {file_path}")
+            self.LOGGER.info(f"No Content: {file_path}")
             return {"status_code": status.HTTP_204_NO_CONTENT, "detail": "No Content"}
 
-    @classmethod
-    async def execute_download_file(cls, argument: DownloadHandler) -> FileResponse:
+    async def execute_download_file(self, argument: DownloadHandler) -> FileResponse:
         """Executes task for the endpoint ``/download-file``.
 
         Args:
@@ -87,20 +85,19 @@ class Executor(Model):
             - 404: If the file doesn't exist.
         """
         file_name = argument.FileName
-        file_path = f'{argument.FilePath}{path.sep}{file_name}'
-        if path.isfile(path=file_path):
+        file_path = f'{argument.FilePath}{os.path.sep}{file_name}'
+        if os.path.isfile(path=file_path):
             if file_name.startswith('.'):
-                cls.LOGGER.warning(f'Access Denied: {file_name}')
+                self.LOGGER.warning(f'Access Denied: {file_name}')
                 raise HTTPException(status_code=403, detail='Dot (.) files cannot be downloaded over API.')
             else:
-                cls.LOGGER.info(f'Download Requested: {file_name}')
+                self.LOGGER.info(f'Download Requested: {file_name}')
                 return FileResponse(path=file_path, media_type='application/octet-stream', filename=file_name)
         else:
-            cls.LOGGER.error(f'File Not Found: {file_name}')
-            raise HTTPException(status_code=404, detail=status.HTTP_404_NOT_FOUND)
+            self.LOGGER.error(f'File Not Found: {file_name}')
+            raise HTTPException(status_code=404, detail=f'{status.HTTP_404_NOT_FOUND}\n{file_name}')
 
-    @classmethod
-    async def execute_upload_file(cls, argument: UploadHandler, data: UploadFile) -> None:
+    async def execute_upload_file(self, data: UploadFile, argument: UploadHandler = None) -> None:
         """Executes task for the endpoint ``/upload-file``.
 
         Args:
@@ -115,29 +112,29 @@ class Executor(Model):
         """
         if not (filepath := argument.FilePath):
             raise HTTPException(status_code=404, detail='FilePath cannot be a `null` value')
-        if not path.exists(filepath):
+        if not os.path.exists(filepath):
             raise HTTPException(status_code=404, detail=status.HTTP_404_NOT_FOUND)
         if not (filename := argument.FileName):
             filename = data.filename
         if filepath.endswith(filename):
             filename = filepath
         else:
-            if filepath.endswith(path.sep):
+            if filepath.endswith(os.path.sep):
                 filename = f'{filepath}{filename}'
             else:
-                filename = f'{filepath}{path.sep}{filename}'
+                filename = f'{filepath}{os.path.sep}{filename}'
         content = await data.read()
         with open(filename, 'wb') as file:
             file.write(content)
 
-        file_name = filename.split(path.sep)[-1]
-        if path.isfile(filename):
-            if not int(datetime.now().timestamp()) - int(stat(filename).st_mtime):
-                cls.LOGGER.info(f'Uploaded File: {file_name}')
+        file_name = filename.split(os.path.sep)[-1]
+        if os.path.isfile(filename):
+            if not int(datetime.now().timestamp()) - int(os.stat(filename).st_mtime):
+                self.LOGGER.info(f'Uploaded File: {file_name}')
                 raise HTTPException(status_code=200, detail=f'{file_name} was uploaded to {filepath}.')
             else:
-                cls.LOGGER.error(f'Failed to store: {file_name}')
+                self.LOGGER.error(f'Failed to store: {file_name}')
                 raise HTTPException(status_code=500, detail=f'Unable to store {filename} in the {filepath}.')
         else:
-            cls.LOGGER.error(f'Failed to store: {file_name}')
+            self.LOGGER.error(f'Failed to store: {file_name}')
             raise HTTPException(status_code=500, detail=f'Unable to upload {filename} to {filepath}.')

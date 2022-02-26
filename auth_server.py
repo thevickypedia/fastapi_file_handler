@@ -1,7 +1,6 @@
 from logging import getLogger
 from logging.config import dictConfig
 from os import environ
-from pathlib import PurePath
 from socket import gethostbyname
 
 import uvicorn
@@ -15,10 +14,8 @@ from models.executor import Executor
 from models.filters import EndpointFilter
 from models.secrets import Secrets
 
-__module__ = PurePath(__file__).stem
 getLogger("uvicorn.access").addFilter(EndpointFilter())
-LOGGER = getLogger(__module__)
-environ['module'] = __module__
+LOGGER = getLogger('LOGGER')
 
 task_executor = Executor()
 
@@ -122,8 +119,8 @@ async def list_directory(authenticator: dict = Depends(oauth2_scheme),
 
 # noinspection PyShadowingNames
 @app.get("/download-file")
-async def download_file(argument: DownloadHandler = Depends(),
-                        authenticator: dict = Depends(oauth2_scheme)) -> FileResponse:
+async def download_file(authenticator: dict = Depends(oauth2_scheme),
+                        argument: DownloadHandler = Depends()) -> FileResponse:
     """Asynchronously streams a file as the response.
 
     Args:
@@ -140,9 +137,9 @@ async def download_file(argument: DownloadHandler = Depends(),
 
 # noinspection PyShadowingNames
 @app.post("/upload-file")
-async def upload_file(upload: UploadHandler = Depends(),
-                      data: UploadFile = File(...),
-                      authenticator: dict = Depends(oauth2_scheme)) -> None:
+async def upload_file(authenticator: dict = Depends(oauth2_scheme),
+                      upload: UploadHandler = Depends(),
+                      data: UploadFile = File(...)) -> None:
     """Allows the user to send a ``POST`` request to upload a file to the server.
 
     Args:
@@ -156,7 +153,7 @@ async def upload_file(upload: UploadHandler = Depends(),
 
 if __name__ == '__main__':
     argument_dict = {
-        "app": f"{__module__ or __name__}:app",
+        "app": f"{__name__}:app",
         "host": gethostbyname('localhost'),
         "port": int(environ.get('port', 1918)),
         "reload": True

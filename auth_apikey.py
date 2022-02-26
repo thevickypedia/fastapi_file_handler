@@ -2,25 +2,23 @@ from base64 import urlsafe_b64encode
 from logging import getLogger
 from logging.config import dictConfig
 from os import environ
-from pathlib import PurePath
 from socket import gethostbyname
+from typing import Any
 from uuid import uuid1
 
 import uvicorn
-from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, status
+from fastapi import (Depends, FastAPI, File, Form, HTTPException, UploadFile,
+                     status)
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 
-from models.classes import (DownloadHandler, GetPhrase, ListHandler,
-                            UploadHandler)
+from models.classes import DownloadHandler, ListHandler, UploadHandler
 from models.executor import Executor
 from models.filters import APIKeyFilter, EndpointFilter
 
-__module__ = PurePath(__file__).stem
-environ['module'] = __module__
 getLogger("uvicorn.access").addFilter(EndpointFilter())
 getLogger("uvicorn.access").addFilter(APIKeyFilter())
-LOGGER = getLogger(__module__)
+LOGGER = getLogger('LOGGER')
 
 APIKEY = environ.get('APIKEY', urlsafe_b64encode(uuid1().bytes).rstrip(b'=').decode('ascii'))
 task_executor = Executor()
@@ -48,7 +46,7 @@ app.add_middleware(
 )
 
 
-def verify_auth(apikey: str) -> None:
+async def verify_auth(apikey: str) -> None:
     """Authenticates the APIKEY.
 
     Args:
@@ -94,58 +92,58 @@ def health() -> dict:
     return {'Message': 'Healthy'}
 
 
-@app.get("/list-directory")
-async def list_directory(feed: GetPhrase = Depends(),
+@app.post("/list-directory")
+async def list_directory(apikey: Any = Form(...),
                          argument: ListHandler = Depends()) -> dict:
     """Lists all the files in a directory.
 
     Args:
-        feed: Authenticates the user request.
+        apikey: Authenticates the user request.
         argument: Takes the file path as an argument.
 
     Returns:
         dict:
         Returns a dictionary of files and directories in the given path.
     """
-    verify_auth(apikey=feed.apikey)
+    await verify_auth(apikey=apikey)
     return await task_executor.execute_list_directory(argument=argument)
 
 
-@app.get("/download-file")
-async def download_file(feed: GetPhrase = Depends(),
+@app.post("/download-file")
+async def download_file(apikey: Any = Form(...),
                         argument: DownloadHandler = Depends()) -> FileResponse:
     """Asynchronously streams a file as the response.
 
     Args:
-        feed: Authenticates the user request.
+        apikey: Authenticates the user request.
         argument: Takes the class **DownloadHandler** as an argument.
 
     Returns:
         FileResponse:
         Returns the download-able version of the file.
     """
-    verify_auth(apikey=feed.apikey)
+    await verify_auth(apikey=apikey)
     return await task_executor.execute_download_file(argument=argument)
 
 
 @app.post("/upload-file")
-async def upload_file(feed: GetPhrase = Depends(),
-                      upload: UploadHandler = Depends(),
-                      data: UploadFile = File(...)) -> None:
+async def upload_file(apikey: Any = Form(...),
+                      data: UploadFile = File(...),
+                      upload: UploadHandler = Depends()) -> None:
     """Allows the user to send a ``POST`` request to upload a file to the server.
 
     Args:
-        feed: Authenticates the user request.
+        apikey: Authenticates the user request.
         upload: Takes the class ``UploadHandler`` as an argument.
         data: Takes the file that has to be uploaded as an argument.
     """
-    verify_auth(apikey=feed.apikey)
+    await verify_auth(apikey=apikey)
     await task_executor.execute_upload_file(argument=upload, data=data)
 
 
 if __name__ == '__main__':
     argument_dict = {
-        "app": f"{__module__ or __name__}:app",
+        "app": f"{__name__}:app",
         "host": gethostbyname('localhost'),
         "port": int(environ.get('port', 1914)),
         "reload": True
