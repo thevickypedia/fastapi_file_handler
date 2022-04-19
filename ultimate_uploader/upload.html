@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multi-file uploader</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300);
+        body {
+            background-image: url("https://vigneshrao.com/img/auth_server/bg.jpg");
+        }
+
+        .frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            margin-top: -200px;
+            margin-left: -200px;
+            border-radius: 2px;
+            box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background: linear-gradient(to top right, gray 0%, black 100%);
+            color: #333;
+            font-family: "Open Sans", Helvetica, sans-serif;
+        }
+
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 260px;
+            border-radius: 3px;
+            box-shadow: 8px 10px 15px 0 rgba(0, 0, 0, 0.2);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-direction: column;
+        }
+
+        .title {
+            width: 100%;
+            height: 50px;
+            border-bottom: 1px solid #999;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 16px;
+            font-weight: 300;
+            color: #666;
+        }
+
+        .choose {
+            display: block;
+            width: 250px;
+            height: 25px;
+            background: dimgray;
+            color: #fff;
+            border-radius: 3px;
+            border: 0;
+            box-shadow: 0 3px 0 0 darkgray;
+            transition: all 0.3s ease-in-out;
+            font-size: 14px;
+        }
+
+        .btn {
+            display: block;
+            width: 200px;
+            height: 40px;
+            margin-top: 15px;
+            margin-left: 20px;
+            background: dimgray;
+            color: #fff;
+            border-radius: 3px;
+            border: 0;
+            box-shadow: 0 3px 0 0 darkgray;
+            transition: all 0.3s ease-in-out;
+            font-size: 14px;
+        }
+
+        .choose:hover {
+            background: lightslategray;
+            box-shadow: 0 3px 0 0 slategray;
+        }
+
+        .btn:hover {
+            background: lightslategray;
+            box-shadow: 0 3px 0 0 slategray;
+        }
+    </style>
+</head>
+<body>
+<div class="frame">
+	<div class="center">
+		<div class="title">
+			<h1>File Uploader</h1>
+		</div>
+        <form action="/upload-files/" enctype="multipart/form-data" method="post">
+            <input class="choose" name="files" type="file" multiple>
+            <input class="btn" type="submit">
+        </form>
+    </div>
+</div>
+</body>
+</html>
