@@ -27,10 +27,10 @@ FileHandler - Server Authentication
    :members:
    :undoc-members:
 
-FileHandler - Ultimate Uploader
-===============================
+FileHandler - Multi-file Uploader
+=================================
 
-.. automodule:: ultimate_uploader.upload
+.. automodule:: upload
    :members:
    :undoc-members:
 

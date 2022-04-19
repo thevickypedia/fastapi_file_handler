@@ -1,7 +1,6 @@
-from logging import getLogger
-from logging.config import dictConfig
-from os import environ
-from socket import gethostbyname
+import logging.config
+import os
+import socket
 
 import uvicorn
 from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, status
@@ -9,13 +8,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from models.classes import Bogus, DownloadHandler, ListHandler, UploadHandler
+from models.classes import (Bogus, DownloadHandler, ListHandler,
+                            MultiFileUploadHandler, UploadHandler)
 from models.executor import Executor
 from models.filters import EndpointFilter
 from models.secrets import Secrets
 
-getLogger("uvicorn.access").addFilter(EndpointFilter())
-LOGGER = getLogger('LOGGER')
+logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
+LOGGER = logging.getLogger('LOGGER')
 
 task_executor = Executor()
 
@@ -45,15 +45,15 @@ app.add_middleware(
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="authenticator")
 
 
-@app.on_event(event_type='startup')
+@app.on_event(event_type="startup")
 async def startup_event():
     """Runs during startup. Configures custom logging using LogConfig."""
     from models.config import LogConfig
-    dictConfig(config=LogConfig().dict())
+    logging.config.dictConfig(config=LogConfig().dict())
 
 
-@app.post("/authenticator", include_in_schema=False)
-async def authenticator(form_data: OAuth2PasswordRequestForm = Depends()) -> dict:
+@app.post("/authenticator/", include_in_schema=False)
+async def server_authenticator(form_data: OAuth2PasswordRequestForm = Depends()) -> dict:
     """Authenticates the user entered information.
 
     Args:
@@ -77,7 +77,7 @@ async def authenticator(form_data: OAuth2PasswordRequestForm = Depends()) -> dic
         raise HTTPException(status_code=401, detail=status.HTTP_401_UNAUTHORIZED)
 
 
-@app.get('/', response_class=RedirectResponse, include_in_schema=False)
+@app.get("/", response_class=RedirectResponse, include_in_schema=False)
 async def redirect_index() -> str:
     """Redirect to documents.
 
@@ -85,10 +85,10 @@ async def redirect_index() -> str:
         str:
         Redirects `/` url to `/docs`
     """
-    return '/docs'
+    return "/docs"
 
 
-@app.get('/status', include_in_schema=False)
+@app.get("/status/", include_in_schema=False)
 def health() -> dict:
     """Health Check for the server.
 
@@ -99,8 +99,7 @@ def health() -> dict:
     return {'Message': 'Healthy'}
 
 
-# noinspection PyShadowingNames
-@app.get("/list-directory")
+@app.get("/list-directory/")
 async def list_directory(authenticator: dict = Depends(oauth2_scheme),
                          argument: ListHandler = Depends()) -> dict:
     """Lists all the files in a directory.
@@ -117,8 +116,7 @@ async def list_directory(authenticator: dict = Depends(oauth2_scheme),
     return await task_executor.execute_list_directory(argument=argument)
 
 
-# noinspection PyShadowingNames
-@app.get("/download-file")
+@app.get("/download-file/")
 async def download_file(authenticator: dict = Depends(oauth2_scheme),
                         argument: DownloadHandler = Depends()) -> FileResponse:
     """Asynchronously streams a file as the response.
@@ -135,8 +133,7 @@ async def download_file(authenticator: dict = Depends(oauth2_scheme),
     return await task_executor.execute_download_file(argument=argument)
 
 
-# noinspection PyShadowingNames
-@app.post("/upload-file")
+@app.post("/upload-file/")
 async def upload_file(authenticator: dict = Depends(oauth2_scheme),
                       upload: UploadHandler = Depends(),
                       data: UploadFile = File(...)) -> None:
@@ -148,14 +145,29 @@ async def upload_file(authenticator: dict = Depends(oauth2_scheme),
         data: Takes the file that has to be uploaded as an argument.
     """
     await Bogus(authentication=authenticator)
-    await task_executor.execute_upload_file(argument=upload, data=data)
+    await task_executor.execute_upload_file(argument=upload, file=data)
+
+
+@app.post("/upload-files/")
+async def upload_files(authenticator: dict = Depends(oauth2_scheme),
+                       upload: MultiFileUploadHandler = Depends(),
+                       data: list[UploadFile] = File(...)) -> None:
+    """Allows the user to send a ``POST`` request to upload multiple files to the server.
+
+    Args:
+        authenticator: Authenticates the user request.
+        upload: Takes the class `UploadHandler` as an argument.
+        data: Takes the file that has to be uploaded as an argument.
+    """
+    await Bogus(authentication=authenticator)
+    await task_executor.execute_upload_files(argument=upload, files=data)
 
 
 if __name__ == '__main__':
     argument_dict = {
         "app": f"{__name__}:app",
-        "host": gethostbyname('localhost'),
-        "port": int(environ.get('port', 1918)),
+        "host": socket.gethostbyname('localhost'),
+        "port": int(os.environ.get('port', 1918)),
         "reload": True
     }
     uvicorn.run(**argument_dict)

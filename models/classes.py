@@ -31,6 +31,16 @@ class UploadHandler(BaseModel):
     FilePath: str = os.path.join(os.getcwd(), 'uploads')
 
 
+class MultiFileUploadHandler(BaseModel):
+    """BaseModel that handles input data for the API which is treated as members for the class ``UploadHandler``.
+
+    >>> MultiFileUploadHandler
+
+    """
+
+    FilePath: str = os.path.join(os.getcwd(), 'uploads')
+
+
 class ListHandler(BaseModel):
     """BaseModel that handles input data for the API which is treated as members for the class ``ListHandler``.
 

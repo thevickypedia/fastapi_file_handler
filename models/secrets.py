@@ -12,7 +12,7 @@ class Secrets(Model):
 
     """
 
-    USERNAME: str = os.environ.get('USER', os.path.expanduser('~') or pwd.getpwuid(os.getuid())[0] or os.getlogin())
+    USERNAME: str = os.environ.get('USER', getpass.getuser() or pwd.getpwuid(os.getuid())[0])
     PASSWORD: str = os.environ.get('PASSWORD')
 
     if not USERNAME:

@@ -3,10 +3,8 @@
 # TODO: Remove serving HTML page and make it a proper backend.
 # TODO: Interact with the JS in front-end and backend to show a progress bar in the UI.
 
-import getpass
 import inspect
 import logging
-import math
 import os
 import socket
 from typing import Optional, Union
@@ -18,43 +16,26 @@ from fastapi.responses import (HTMLResponse, JSONResponse, PlainTextResponse,
                                RedirectResponse)
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
+from models.executor import size_converter
 from models.filters import EndpointFilter
+from models.secrets import Secrets
 
 logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
 
 security = HTTPBasic(realm="simple")
-LOGGER = logging.getLogger('uvicorn')
+LOGGER = logging.getLogger("uvicorn")
 
 app = FastAPI()
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-upload_dir = os.path.join(parent_dir, 'uploads')
+upload_dir = os.path.join(current_dir, "uploads")
 
 if not os.path.isdir(upload_dir):
     os.makedirs(upload_dir)
 
-source_html = os.path.join(current_dir, "upload.html")
+source_html = os.path.join(current_dir, "sources", "upload.html")
 with open(source_html) as f_stream:
     HTML_CONTENT = f_stream.read()
-
-USERNAME = os.environ.get('USERNAME', os.environ.get('USER', getpass.getuser()))
-PASSWORD = os.environ.get('PASSWORD', 'uploader2022')
-
-
-def size_converter(byte_size: int) -> str:
-    """Gets the current memory consumed and converts it to human friendly format.
-
-    Args:
-        byte_size: Receives byte size as argument.
-
-    Returns:
-        str:
-        Converted understandable size.
-    """
-    size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-    index = int(math.floor(math.log(byte_size, 1024)))
-    return f"{round(byte_size / pow(1024, index), 2)} {size_name[index]}"
 
 
 @app.delete("/delete/file/{name_file}")
@@ -115,7 +96,7 @@ async def upload_files(files: list[UploadFile] = File(..., description="Upload f
     return "\n".join(return_val)
 
 
-@app.get('/set')
+@app.get("/set/")
 async def set_cookie(response: Response) -> bool:
     """Sets a cookie.
 
@@ -127,14 +108,14 @@ async def set_cookie(response: Response) -> bool:
         A simple boolean flag.
     """
     response.set_cookie(
-        key='refresh_token',
-        value='helloworld',
+        key="refresh_token",
+        value="helloworld",
         httponly=True
     )
     return True
 
 
-@app.get('/read')
+@app.get("/read/")
 async def read_cookie(refresh_token: Optional[str] = Cookie(None)) -> JSONResponse:
     """Reads a cookie.
 
@@ -161,7 +142,7 @@ async def read_cookie(refresh_token: Optional[str] = Cookie(None)) -> JSONRespon
         )
 
 
-@app.get("/login", response_class=HTMLResponse)
+@app.get("/login/", response_class=HTMLResponse)
 async def login(credentials: HTTPBasicCredentials = Security(security)) -> HTMLResponse:
     """Login request handler.
 
@@ -177,11 +158,11 @@ async def login(credentials: HTTPBasicCredentials = Security(security)) -> HTMLR
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Username and password are required to proceed.",
             headers={
-                'WWW-Authenticate': 'Basic'
+                "WWW-Authenticate": "Basic"
             },
         )
 
-    if credentials.username == USERNAME and credentials.password == PASSWORD:
+    if credentials.username == Secrets.USERNAME and credentials.password == Secrets.PASSWORD:
         return HTMLResponse(
             content=HTML_CONTENT
         )
@@ -190,7 +171,7 @@ async def login(credentials: HTTPBasicCredentials = Security(security)) -> HTMLR
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Incorrect username or password",
         headers={
-            'WWW-Authenticate': 'Basic'
+            "WWW-Authenticate": "Basic"
         },
     )
 
@@ -203,14 +184,14 @@ async def redirect_index() -> RedirectResponse:
         RedirectResponse:
         Redirects the root endpoint ``/`` url to login page.
     """
-    return RedirectResponse(url='/login')
+    return RedirectResponse(url="/login")
 
 
 if __name__ == '__main__':
     argument_dict = {
         "app": f"{__name__}:app",
-        "host": socket.gethostbyname('localhost'),
-        "port": int(os.environ.get('port', 1918)),
+        "host": socket.gethostbyname("localhost"),
+        "port": int(os.environ.get("port", 1918)),
         "reload": True
     }
     uvicorn.run(**argument_dict)

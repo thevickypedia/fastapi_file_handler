@@ -150,6 +150,21 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="auth_apikey.upload_files">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth_apikey.</span></span><span class="sig-name descname"><span class="pre">upload_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apikey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Form(Ellipsis)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">fastapi.datastructures.UploadFile</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">File(Ellipsis)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">models.classes.MultiFileUploadHandler</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(NoneType)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#auth_apikey.upload_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows the user to send a <code class="docutils literal notranslate"><span class="pre">POST</span></code> request to upload a file to the server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>apikey</strong> – Authenticates the user request.</p></li>
+<li><p><strong>upload</strong> – Takes the class <code class="docutils literal notranslate"><span class="pre">UploadHandler</span></code> as an argument.</p></li>
+<li><p><strong>data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="auth_apikey.verify_auth">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth_apikey.</span></span><span class="sig-name descname"><span class="pre">verify_auth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apikey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#auth_apikey.verify_auth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Authenticates the APIKEY.</p>
@@ -169,29 +184,6 @@
 </section>
 <section id="module-auth_server">
 <span id="filehandler-server-authentication"></span><h1>FileHandler - Server Authentication<a class="headerlink" href="#module-auth_server" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="auth_server.authenticator">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth_server.</span></span><span class="sig-name descname"><span class="pre">authenticator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">fastapi.security.oauth2.OAuth2PasswordRequestForm</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(NoneType)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#auth_server.authenticator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Authenticates the user entered information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>form_data</strong> – Takes the user input as an argument.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A dictionary of access token.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>HTTPExceptions</strong> – </p></li>
-<li><p><strong>- 401</strong> – If user is unauthorized.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="auth_server.download_file">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth_server.</span></span><span class="sig-name descname"><span class="pre">download_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">authenticator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(OAuth2PasswordBearer)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.classes.DownloadHandler" title="models.classes.DownloadHandler"><span class="pre">models.classes.DownloadHandler</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(NoneType)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.FileResponse</span></span></span><a class="headerlink" href="#auth_server.download_file" title="Permalink to this definition">¶</a></dt>
@@ -261,6 +253,29 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="auth_server.server_authenticator">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth_server.</span></span><span class="sig-name descname"><span class="pre">server_authenticator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">fastapi.security.oauth2.OAuth2PasswordRequestForm</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(NoneType)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#auth_server.server_authenticator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Authenticates the user entered information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>form_data</strong> – Takes the user input as an argument.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary of access token.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPExceptions</strong> – </p></li>
+<li><p><strong>- 401</strong> – If user is unauthorized.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="auth_server.startup_event">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth_server.</span></span><span class="sig-name descname"><span class="pre">startup_event</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth_server.startup_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs during startup. Configures custom logging using LogConfig.</p>
@@ -281,13 +296,28 @@
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="auth_server.upload_files">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth_server.</span></span><span class="sig-name descname"><span class="pre">upload_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">authenticator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(OAuth2PasswordBearer)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">models.classes.MultiFileUploadHandler</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(NoneType)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">fastapi.datastructures.UploadFile</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">File(Ellipsis)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#auth_server.upload_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows the user to send a <code class="docutils literal notranslate"><span class="pre">POST</span></code> request to upload multiple files to the server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>authenticator</strong> – Authenticates the user request.</p></li>
+<li><p><strong>upload</strong> – Takes the class <cite>UploadHandler</cite> as an argument.</p></li>
+<li><p><strong>data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="module-ultimate_uploader.upload">
-<span id="filehandler-ultimate-uploader"></span><h1>FileHandler - Ultimate Uploader<a class="headerlink" href="#module-ultimate_uploader.upload" title="Permalink to this headline">¶</a></h1>
+<section id="module-upload">
+<span id="filehandler-multi-file-uploader"></span><h1>FileHandler - Multi-file Uploader<a class="headerlink" href="#module-upload" title="Permalink to this headline">¶</a></h1>
 <p>Upload multiple files at once authenticating using http basic auth.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="ultimate_uploader.upload.delete_file">
-<span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">delete_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.JSONResponse</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.delete_file" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="upload.delete_file">
+<span class="sig-prename descclassname"><span class="pre">upload.</span></span><span class="sig-name descname"><span class="pre">delete_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.JSONResponse</span></span></span><a class="headerlink" href="#upload.delete_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -303,8 +333,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="ultimate_uploader.upload.login">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">fastapi.security.http.HTTPBasicCredentials</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Security(HTTPBasic)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.HTMLResponse</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.login" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="upload.login">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">upload.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">fastapi.security.http.HTTPBasicCredentials</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Security(HTTPBasic)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.HTMLResponse</span></span></span><a class="headerlink" href="#upload.login" title="Permalink to this definition">¶</a></dt>
 <dd><p>Login request handler.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -320,8 +350,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="ultimate_uploader.upload.read_cookie">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">read_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refresh_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Cookie(None)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.JSONResponse</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.read_cookie" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="upload.read_cookie">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">upload.</span></span><span class="sig-name descname"><span class="pre">read_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refresh_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Cookie(None)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.JSONResponse</span></span></span><a class="headerlink" href="#upload.read_cookie" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a cookie.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -337,8 +367,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="ultimate_uploader.upload.redirect_index">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">redirect_index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.RedirectResponse</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.redirect_index" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="upload.redirect_index">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">upload.</span></span><span class="sig-name descname"><span class="pre">redirect_index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.RedirectResponse</span></span></span><a class="headerlink" href="#upload.redirect_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Redirect to login page.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -351,8 +381,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="ultimate_uploader.upload.set_cookie">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">set_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">starlette.responses.Response</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.set_cookie" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="upload.set_cookie">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">upload.</span></span><span class="sig-name descname"><span class="pre">set_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">starlette.responses.Response</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#upload.set_cookie" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a cookie.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -368,25 +398,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="ultimate_uploader.upload.size_converter">
-<span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">size_converter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.size_converter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the current memory consumed and converts it to human friendly format.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>byte_size</strong> – Receives byte size as argument.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Converted understandable size.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ultimate_uploader.upload.upload_files">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">upload_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">fastapi.datastructures.UploadFile</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">File(Ellipsis)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">starlette.responses.JSONResponse</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ultimate_uploader.upload.upload_files" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="upload.upload_files">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">upload.</span></span><span class="sig-name descname"><span class="pre">upload_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">fastapi.datastructures.UploadFile</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">File(Ellipsis)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">starlette.responses.JSONResponse</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#upload.upload_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Upload handler.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -618,13 +631,13 @@ in the message, and thus cannot contain a message body.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="models.executor.Executor.execute_upload_file">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute_upload_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">fastapi.datastructures.UploadFile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#models.classes.UploadHandler" title="models.classes.UploadHandler"><span class="pre">models.classes.UploadHandler</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#models.executor.Executor.execute_upload_file" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute_upload_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">fastapi.datastructures.UploadFile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#models.classes.UploadHandler" title="models.classes.UploadHandler"><span class="pre">models.classes.UploadHandler</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#models.executor.Executor.execute_upload_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes task for the endpoint <code class="docutils literal notranslate"><span class="pre">/upload-file</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>argument</strong> – Takes the class <code class="docutils literal notranslate"><span class="pre">UploadHandler</span></code> as an argument.</p></li>
-<li><p><strong>data</strong> – Takes the file that has to be uploaded as an argument.</p></li>
+<li><p><strong>file</strong> – Takes the file that has to be uploaded as an argument.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -632,6 +645,27 @@ in the message, and thus cannot contain a message body.</p>
 <li><p><strong>HTTPExceptions</strong> – </p></li>
 <li><p><strong>- 200</strong> – If file was uploaded successfully.</p></li>
 <li><p><strong>- 500</strong> – If failed to upload file to server.</p></li>
+<li><p><strong>- 404</strong> – If file path is null or does not exist.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.executor.Executor.execute_upload_files">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute_upload_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">fastapi.datastructures.UploadFile</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">models.classes.MultiFileUploadHandler</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#models.executor.Executor.execute_upload_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes task for the endpoint <code class="docutils literal notranslate"><span class="pre">/upload-files</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>argument</strong> – Takes the class <code class="docutils literal notranslate"><span class="pre">MultiFileUploadHandler</span></code> as an argument.</p></li>
+<li><p><strong>files</strong> – Takes the list of files that has to be uploaded as an argument.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPExceptions</strong> – </p></li>
+<li><p><strong>- 200</strong> – If file was uploaded successfully.</p></li>
 <li><p><strong>- 404</strong> – If file path is null or does not exist.</p></li>
 </ul>
 </dd>
@@ -684,7 +718,7 @@ in the message, and thus cannot contain a message body.</p>
 <li><a class="reference internal" href="#">Welcome to FileHandler API’s documentation!</a></li>
 <li><a class="reference internal" href="#module-auth_apikey">FileHandler - APIKey Authentication</a></li>
 <li><a class="reference internal" href="#module-auth_server">FileHandler - Server Authentication</a></li>
-<li><a class="reference internal" href="#module-ultimate_uploader.upload">FileHandler - Ultimate Uploader</a></li>
+<li><a class="reference internal" href="#module-upload">FileHandler - Multi-file Uploader</a></li>
 <li><a class="reference internal" href="#module-models.secrets">Models - Secrets</a></li>
 <li><a class="reference internal" href="#models-filters">Models - Filters</a></li>
 <li><a class="reference internal" href="#models-classes">Models - Classes</a></li>
