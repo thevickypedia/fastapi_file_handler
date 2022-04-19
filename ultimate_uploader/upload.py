@@ -1,14 +1,21 @@
+"""Upload multiple files at once authenticating using http basic auth."""
+
+# TODO: Remove serving HTML page and make it a proper backend.
+# TODO: Interact with the JS in front-end and backend to show a progress bar in the UI.
+
 import getpass
 import inspect
 import logging
 import math
 import os
 import socket
-from typing import Union, Optional
+from typing import Optional, Union
 
 import uvicorn
-from fastapi import Cookie, FastAPI, File, UploadFile, Response, Security, HTTPException, status
-from fastapi.responses import HTMLResponse, PlainTextResponse, JSONResponse, RedirectResponse
+from fastapi import (Cookie, FastAPI, File, HTTPException, Response, Security,
+                     UploadFile, status)
+from fastapi.responses import (HTMLResponse, JSONResponse, PlainTextResponse,
+                               RedirectResponse)
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 from models.filters import EndpointFilter

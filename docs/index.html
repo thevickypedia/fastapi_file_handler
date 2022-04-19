@@ -282,6 +282,126 @@
 </dd></dl>
 
 </section>
+<section id="module-ultimate_uploader.upload">
+<span id="filehandler-ultimate-uploader"></span><h1>FileHandler - Ultimate Uploader<a class="headerlink" href="#module-ultimate_uploader.upload" title="Permalink to this headline">¶</a></h1>
+<p>Upload multiple files at once authenticating using http basic auth.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="ultimate_uploader.upload.delete_file">
+<span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">delete_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.JSONResponse</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.delete_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name_file</strong> – Takes name of the file to be deleted as an argument.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Deletion status wrapped in a JSON blurb.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>JSONResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ultimate_uploader.upload.login">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">fastapi.security.http.HTTPBasicCredentials</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Security(HTTPBasic)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.HTMLResponse</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Login request handler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>credentials</strong> – HTTPBasicCredentials for authentication.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTMLResponse of the base upload page.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>HTMLResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ultimate_uploader.upload.read_cookie">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">read_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refresh_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Cookie(None)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.JSONResponse</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.read_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a cookie.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>refresh_token</strong> – Name of the cookie.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns the value of the cookie as a json blurb.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>JSONResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ultimate_uploader.upload.redirect_index">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">redirect_index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">starlette.responses.RedirectResponse</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.redirect_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redirect to login page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Redirects the root endpoint <code class="docutils literal notranslate"><span class="pre">/</span></code> url to login page.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>RedirectResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ultimate_uploader.upload.set_cookie">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">set_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">starlette.responses.Response</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.set_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a cookie.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>response</strong> – Takes the url response as an argument.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A simple boolean flag.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ultimate_uploader.upload.size_converter">
+<span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">size_converter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#ultimate_uploader.upload.size_converter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the current memory consumed and converts it to human friendly format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>byte_size</strong> – Receives byte size as argument.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Converted understandable size.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ultimate_uploader.upload.upload_files">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ultimate_uploader.upload.</span></span><span class="sig-name descname"><span class="pre">upload_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">fastapi.datastructures.UploadFile</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">File(Ellipsis)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">starlette.responses.JSONResponse</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ultimate_uploader.upload.upload_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upload handler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>files</strong> – Takes list[UploadFile] as an argument. Use list[bytes] to upload using bytes.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>File names and the size of each file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-models.secrets">
 <span id="models-secrets"></span><h1>Models - Secrets<a class="headerlink" href="#module-models.secrets" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
@@ -564,6 +684,7 @@ in the message, and thus cannot contain a message body.</p>
 <li><a class="reference internal" href="#">Welcome to FileHandler API’s documentation!</a></li>
 <li><a class="reference internal" href="#module-auth_apikey">FileHandler - APIKey Authentication</a></li>
 <li><a class="reference internal" href="#module-auth_server">FileHandler - Server Authentication</a></li>
+<li><a class="reference internal" href="#module-ultimate_uploader.upload">FileHandler - Ultimate Uploader</a></li>
 <li><a class="reference internal" href="#module-models.secrets">Models - Secrets</a></li>
 <li><a class="reference internal" href="#models-filters">Models - Filters</a></li>
 <li><a class="reference internal" href="#models-classes">Models - Classes</a></li>
@@ -617,7 +738,7 @@ in the message, and thus cannot contain a message body.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Vignesh Sivanandha Rao.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
     </div>
   </body>
 </html>

@@ -27,6 +27,13 @@ FileHandler - Server Authentication
    :members:
    :undoc-members:
 
+FileHandler - Ultimate Uploader
+===============================
+
+.. automodule:: ultimate_uploader.upload
+   :members:
+   :undoc-members:
+
 Models - Secrets
 ================
 
@@ -60,12 +67,6 @@ Models - Classes
    :undoc-members:
 ..
    :exclude-members: FileName, FilePath
-
-.. autoclass:: models.classes.GetPhrase(pydantic.BaseModel)
-   :members:
-   :undoc-members:
-..
-   :exclude-members: apikey
 
 .. autoclass:: models.classes.ListHandler(pydantic.BaseModel)
    :members:
