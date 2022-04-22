@@ -7,6 +7,7 @@ import inspect
 import logging
 import os
 import socket
+import time
 from typing import Optional, Union
 
 import uvicorn
@@ -16,6 +17,7 @@ from fastapi.responses import (HTMLResponse, JSONResponse, PlainTextResponse,
                                RedirectResponse)
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
+from models import env
 from models.executor import size_converter
 from models.filters import EndpointFilter
 from models.secrets import Secrets
@@ -36,6 +38,14 @@ if not os.path.isdir(upload_dir):
 source_html = os.path.join(current_dir, "sources", "upload.html")
 with open(source_html) as f_stream:
     HTML_CONTENT = f_stream.read()
+
+RESET_HEADERS = {
+    "WWW-Authenticate": "Basic",
+    "Pragma": "no-cache",
+    "Expires": "0",
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    "Clear-Site-Data": '"cache", "cookies", "storage", "executionContexts"'
+}
 
 
 @app.delete("/delete/file/{name_file}")
@@ -84,7 +94,8 @@ async def upload_files(files: list[UploadFile] = File(..., description="Upload f
             content={
                 "error_message": "No input received."
             },
-            status_code=404
+            status_code=404,
+            headers=RESET_HEADERS
         )
     for file in files:
         data = await file.read()
@@ -131,14 +142,16 @@ async def read_cookie(refresh_token: Optional[str] = Cookie(None)) -> JSONRespon
             content={
                 "refresh_token": refresh_token
             },
-            status_code=200
+            status_code=200,
+            headers=RESET_HEADERS
         )
     else:
         return JSONResponse(
             content={
                 "refresh_token": status.HTTP_404_NOT_FOUND
             },
-            status_code=404
+            status_code=404,
+            headers=RESET_HEADERS
         )
 
 
@@ -153,27 +166,46 @@ async def login(credentials: HTTPBasicCredentials = Security(security)) -> HTMLR
         HTMLResponse:
         HTMLResponse of the base upload page.
     """
+    if _reset_auth():
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Username and password are required to proceed.",
+            headers=RESET_HEADERS
+        )
+
     if not credentials.username and not credentials.password:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Username and password are required to proceed.",
-            headers={
-                "WWW-Authenticate": "Basic"
-            },
+            headers=RESET_HEADERS
         )
 
     if credentials.username == Secrets.USERNAME and credentials.password == Secrets.PASSWORD:
         return HTMLResponse(
-            content=HTML_CONTENT
+            content=HTML_CONTENT,
+            headers=RESET_HEADERS
         )
 
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Incorrect username or password",
-        headers={
-            "WWW-Authenticate": "Basic"
-        },
+        headers=RESET_HEADERS
     )
+
+
+def _reset_auth() -> bool:
+    """Tells if the authentication header has to be reset and cache to be cleared.
+
+    Returns:
+        bool:
+        True if it is the first login attempt, or it has been more than the set timeout since the first/previous expiry.
+    """
+    if env.first_run:
+        env.first_run = False
+        return True
+    elif time.time() - env.session_time > env.timeout:
+        env.session_time = int(time.time())
+        return True
 
 
 @app.get(path="/")
@@ -184,7 +216,7 @@ async def redirect_index() -> RedirectResponse:
         RedirectResponse:
         Redirects the root endpoint ``/`` url to login page.
     """
-    return RedirectResponse(url="/login")
+    return RedirectResponse(url="/login", headers=RESET_HEADERS)
 
 
 if __name__ == '__main__':
